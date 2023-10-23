@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import NotFound from "./Components/NotFound";
 import Home from "./modules/Home/Home";
+import "./index.css";
 
 function App() {
   return (

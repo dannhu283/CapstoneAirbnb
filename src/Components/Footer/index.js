@@ -15,3 +15,8 @@ export const TitleF = styled.p`
   font-size: 20px;
   font-weight: bold;
 `;
+
+export const Divfooter = styled.div`
+  background-color: #cdcdcd;
+  margin: 0;
+`;
