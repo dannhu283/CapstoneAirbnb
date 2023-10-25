@@ -18,15 +18,14 @@ export const ButtonMain = styled.button`
 `;
 
 export const ButtonCustom = styled.button`
-  background-color: #ffcccc;
+  background-color: #f43f5e;
   padding: 10px 15px;
-  border: 2px solid #ffcccc;
+  border: 2px solid #f43f5e;
   border-radius: 7px;
   cursor: pointer;
   margin: 10px;
   font-size: 15px;
   &:hover {
-    color: #ff3838;
     font-weight: bold;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
       rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
