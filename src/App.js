@@ -5,6 +5,7 @@ import NotFound from "./Components/NotFound";
 import Home from "./modules/Home/Home";
 import "./index.css";
 import LogIn from "./modules/Auth/LogIn";
+import LogUp from "./modules/Auth/LogUp";
 
 function App() {
   return (
@@ -13,8 +14,9 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
+
             <Route path="/log-in" element={<LogIn />} />
-            <Route path="/log-up" />
+            <Route path="/log-up" element={<LogUp />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
