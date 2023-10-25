@@ -38,3 +38,11 @@ export const DivSetting = styled.div`
       rgba(0, 0, 0, 0.22) 0px 15px 12px;
   }
 `;
+
+export const BoxSearch = styled.div`
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  margin: 15px 15%;
+  border-radius: 40px;
+  padding: 15px;
+`;
