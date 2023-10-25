@@ -115,6 +115,8 @@ export default function Header() {
                     fontFamily: "monospace",
                     fontWeight: 700,
                     color: " #f43f5e",
+                    fontSize: "25px",
+                    marginLeft: "-20px",
                   }}
                 >
                   airbnb
