@@ -3,6 +3,7 @@ import MainLayout from "./layouts/MainLayout";
 import NotFound from "./Components/NotFound";
 import Home from "./modules/Home/Home";
 import "./index.css";
+import RoomList from "./modules/RoomList";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
+            <Route path="/rooms/:idLocation" element={<RoomList/>} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

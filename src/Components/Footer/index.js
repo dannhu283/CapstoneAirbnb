@@ -17,6 +17,6 @@ export const TitleF = styled.p`
 `;
 
 export const Divfooter = styled.div`
-  background-color: #cdcdcd;
+  background-color: #F7F7F7;
   margin: 0;
 `;
