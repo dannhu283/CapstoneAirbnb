@@ -8,9 +8,12 @@ import {
   Typography,
 } from "@mui/material";
 import { LiFooter, TitleF, Divfooter } from "./index";
+import HeaderFooter from "./components/HeaderFooter";
 
 export default function Footer() {
   return (
+    <>
+    <HeaderFooter/>
     <Divfooter>
       <Container>
         <Grid container spacing={2}>
@@ -140,5 +143,6 @@ export default function Footer() {
         </Grid>
       </Container>
     </Divfooter>
+    </>
   );
 }
