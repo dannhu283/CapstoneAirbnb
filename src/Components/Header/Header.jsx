@@ -48,7 +48,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 100) {
+      if (window.scrollY > 10) {
         // Show BoxSearch when scrolled down 100 pixels (you can adjust this value)
         setShowBoxSearch(false);
       } else {

@@ -19,7 +19,9 @@
     "react-player": "^2.13.0",
     "react-router-dom": "^6.17.0",
     "react-scripts": "5.0.1",
+    "react-slick": "^0.29.0",
     "resolver": "^0.1.12",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.0",
     "web-vitals": "^2.1.4",
     "yub": "^0.11.1"
@@ -47,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "sass": "^1.69.4"
   }
 }

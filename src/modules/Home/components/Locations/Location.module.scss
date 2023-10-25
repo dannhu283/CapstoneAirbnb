@@ -1,0 +1,20 @@
+.location {
+  padding: 200px 0;
+  box-shadow: rgb(0 0 0 / 8%) 0 1px 0;
+  .locationItem {
+    display: flex !important;
+    align-items: center;
+    img {
+      width: 70px;
+      height: 70px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    .locationDetail {
+      margin-left: 10px;
+    }
+  }
+}
+.arrowItem {
+  font-size: 20px !important;
+}
