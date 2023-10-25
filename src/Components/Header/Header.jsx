@@ -156,6 +156,7 @@ export default function Header() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  cursor: "pointer",
                 }}
               >
                 <img src="img/images.png" alt="logo" width={100} />
@@ -205,12 +206,20 @@ export default function Header() {
                       cursor: "pointer",
                       fontWeight: "bold",
                       alignSelf: "center",
+                      "&:hover": { color: "#f43f5e" },
                     }}
                   >
                     Đón tiếp khách
                   </Typography>
                   <IconButton>
-                    <LanguageIcon fontSize="large" />
+                    <LanguageIcon
+                      fontSize="large"
+                      sx={{
+                        "&:hover": {
+                          color: "#f43f5e",
+                        },
+                      }}
+                    />
                   </IconButton>
                 </Box>
 
