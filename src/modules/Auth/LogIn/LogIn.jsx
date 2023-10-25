@@ -5,10 +5,9 @@ import { object, string } from "yup";
 import { useUserContext } from "../../../context/UserContext/UserContext";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../../APIs/userApi";
-import { Navigate, useSearchParams, Link } from "react-router-dom";
+import { Link, useNavigate, Navigate, useSearchParams } from "react-router-dom";
 import {
   TextField,
-  Button,
   Container,
   Grid,
   Paper,
@@ -21,11 +20,13 @@ import {
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import ReplyIcon from "@mui/icons-material/Reply";
 import { BackGround, Overlay } from "./index";
+import { ButtonCustom } from "../../../Components/Button";
 
 const signinShema = object({
   email: string().required("Email không được để trống"),
-  matKhau: string()
+  password: string()
     .required("Mật khấu không được để trống")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
@@ -34,6 +35,7 @@ const signinShema = object({
 });
 
 export default function Login() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const { currentUser, handleSignin: onLoginSuccess } = useUserContext();
 
@@ -45,17 +47,13 @@ export default function Login() {
   } = useForm({
     defaultValues: {
       email: "",
-      matKhau: "",
+      password: "",
     },
     resolver: yupResolver(signinShema),
     mode: "onTouched",
   });
 
-  const {
-    mutate: handleSignin,
-
-    error,
-  } = useMutation({
+  const { mutate: handleSignin, error } = useMutation({
     mutationFn: (payload) => login(payload),
     onSuccess: (data) => {
       onLoginSuccess(data);
@@ -78,18 +76,30 @@ export default function Login() {
       <Overlay>
         <Container component="main" maxWidth="xs">
           <Paper
-            elevation={3}
+            elevation={4}
             sx={{
-              marginTop: "120px",
+              position: "relative",
+              marginTop: "50%",
               padding: "20px",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
             }}
           >
+            <ReplyIcon
+              onClick={() => navigate("/")}
+              sx={{
+                position: "absolute",
+                left: "5%",
+                color: " #f43f5e",
+                cursor: "pointer",
+                fontSize: "30px",
+                "&:hover": { color: "#2ed573" },
+              }}
+            />
             <Typography
               variant="h5"
-              sx={{ color: "#ff9f1a", fontWeight: "bold" }}
+              sx={{ color: " #f43f5e", fontWeight: "bold" }}
             >
               Đăng Nhập
             </Typography>
@@ -100,25 +110,25 @@ export default function Login() {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
-                    label="Tài Khoản"
+                    label="Email"
                     color="success"
                     variant="outlined"
                     fullWidth
-                    {...register("taiKhoan")}
-                    error={!!errors.taiKhoan}
-                    helperText={errors.taiKhoan && errors.taiKhoan.message}
+                    {...register("email")}
+                    error={!!errors.email}
+                    helperText={errors.email && errors.email.message}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    label="Mật khẩu"
+                    label="password"
                     color="success"
                     type={showPassword ? "text" : "password"}
                     variant="outlined"
                     fullWidth
-                    {...register("matKhau")}
-                    error={!!errors.matKhau}
-                    helperText={errors.matKhau && errors.matKhau.message}
+                    {...register("password")}
+                    error={!!errors.password}
+                    helperText={errors.password && errors.password.message}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -142,12 +152,18 @@ export default function Login() {
                   />
                 </Grid>
               </Grid>
-              <Button type="submit" fullWidth variant="contained">
+              <ButtonCustom type="submit" variant="contained">
                 Đăng Nhập
-              </Button>
-              <Button>
-                <Link to="/">Bạn chưa có tài khoản? Đăng kí ngay</Link>
-              </Button>
+              </ButtonCustom>
+              <Typography sx={{ textAlign: "center" }}>
+                Chưa có tài khoản?
+                <Link
+                  to="/log-up"
+                  style={{ color: "#f43f5e", marginLeft: "5px " }}
+                >
+                  Đăng kí ngay
+                </Link>
+              </Typography>
             </form>
           </Paper>
         </Container>

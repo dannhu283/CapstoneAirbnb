@@ -14,10 +14,10 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
-
-            <Route path="/log-in" element={<LogIn />} />
-            <Route path="/log-up" element={<LogUp />} />
           </Route>
+          <Route path="/log-in" element={<LogIn />} />
+          <Route path="/log-up" element={<LogUp />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

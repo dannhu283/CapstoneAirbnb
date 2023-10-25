@@ -15,7 +15,10 @@ import {
   InputLabel,
   Select,
   TextField,
+  Stack,
   Container,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -23,24 +26,42 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { DivHeader, DivIcon, DivSetting, BoxSearch } from "./index";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../Loading";
-import { ButtonCustom } from "../Button";
+import { ButtonCustom, ButtonMain } from "../Button";
 import { useNavigate } from "react-router-dom";
-
-const settings = [
-  "Đăng kí",
-  "Đăng nhập",
-  "Cho thuê nhà",
-  "Tổ chức trải nghiệm",
-  "Trợ giúp",
-];
+import { ModalSuccess, ModalContent } from "../Modal";
+import { useUserContext } from "../../context/UserContext/UserContext";
 
 export default function Header() {
-  const navigate = useNavigate();
+  const { currentUser, handleSignout } = useUserContext();
+
+  const isUser = currentUser?.user.role.toLowerCase() === "user";
+
+  let settings = [
+    "Đăng kí",
+    "Đăng nhập",
+    "Trợ giúp",
+    "Cho thuê nhà",
+    "Tổ chức trải nghiệm",
+    "Đăng xuất",
+  ];
+
+  if (isUser) {
+    settings = settings.filter(
+      (item) => !item.includes("Đăng kí") && !item.includes("Đăng nhập")
+    );
+  } else {
+    settings = settings.filter((item) => !item.includes("Đăng xuất"));
+  }
+
+  const [open, setOpen] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [state, setState] = useState({
     id: "",
   });
   const [showBoxSearch, setShowBoxSearch] = useState(true);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  const navigate = useNavigate();
 
   const { data: listCityData, isLoading } = useQuery({
     queryKey: ["listCityData"],
@@ -64,6 +85,18 @@ export default function Header() {
     };
   }, []);
 
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -78,6 +111,10 @@ export default function Header() {
     setAnchorElUser(null);
     if (setting === "Đăng nhập") {
       navigate("/log-in");
+    } else if (setting === "Đăng kí") {
+      navigate("/log-up");
+    } else if (setting === "Đăng xuất") {
+      handleConfirmLogout();
     }
   };
 
@@ -91,6 +128,16 @@ export default function Header() {
     // if (state.id !== "") {
     //   navigate(`/roombycity/${state.id}`);
     // }
+  };
+
+  const handleConfirmLogout = () => {
+    setShowSuccessModal(true);
+  };
+
+  const handleLogout = () => {
+    handleClick();
+    handleSignout();
+    setShowSuccessModal(false);
   };
 
   return (
@@ -190,6 +237,19 @@ export default function Header() {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
+                  {isUser && (
+                    <Box>
+                      <MenuItem>
+                        <Typography fontWeight="bold">Trang cá nhân</Typography>
+                      </MenuItem>
+                      <MenuItem>
+                        <Typography fontWeight="bold">Chuyến đi</Typography>
+                      </MenuItem>
+
+                      <Divider />
+                    </Box>
+                  )}
+
                   {settings.map((setting) => (
                     <MenuItem
                       key={setting}
@@ -256,6 +316,48 @@ export default function Header() {
           </BoxSearch>
         )}
       </Container>
+      {showSuccessModal && (
+        <ModalSuccess>
+          <ModalContent>
+            <img
+              style={{ width: "120px", marginTop: "10px" }}
+              src="/img/animation_lnov06bj_small.gif"
+              alt="confirm"
+            />
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: "bold",
+                marginBottom: "40px",
+                color: " #f43f5e",
+              }}
+            >
+              Bạn có chắc chắn đăng xuất?
+            </Typography>
+
+            <ButtonMain onClick={handleLogout}>Đồng ý</ButtonMain>
+            <ButtonCustom onClick={() => setShowSuccessModal(false)}>
+              Hủy Bỏ
+            </ButtonCustom>
+          </ModalContent>
+        </ModalSuccess>
+      )}
+      <Stack spacing={2} sx={{ width: "100%" }}>
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        >
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            Đăng xuất thành công!
+          </Alert>
+        </Snackbar>
+      </Stack>
     </AppBar>
   );
 }
