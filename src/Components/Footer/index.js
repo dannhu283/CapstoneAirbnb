@@ -7,7 +7,8 @@ export const LiFooter = styled.a`
   text-decoration: none;
   margin-bottom: 4px;
   &:hover {
-    color: #0984e3;
+    color: #f43f5e;
+    font-weight: bold;
   }
 `;
 
