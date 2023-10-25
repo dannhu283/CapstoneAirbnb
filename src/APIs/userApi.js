@@ -8,3 +8,12 @@ export const login = async (payload) => {
     throw error.response.data?.content;
   }
 };
+
+export const logup = async (payload) => {
+  try {
+    const response = await fetcher.post("/auth/signup", payload);
+    return response.data?.content;
+  } catch (error) {
+    throw error.response.data?.content;
+  }
+};

@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Box, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { getLocations } from "../../../../APIs/locationApi";
 import Slider from "react-slick";
@@ -10,10 +10,11 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import styled from "./Location.module.scss";
 import cn from "classnames/bind";
 import { Link } from "react-router-dom";
+
 const locationStyle = cn.bind(styled);
 
 function SampleNextArrow(props) {
-  const { className, style, onClick,currentSlide, slideCount } = props;
+  const { className, style, onClick, currentSlide, slideCount } = props;
   const isSlideAtEnd = currentSlide === slideCount - 1;
 
   return (
@@ -76,32 +77,35 @@ export default function Locations() {
     prevArrow: <SamplePrevArrow />,
   };
   return (
-    <div className={locationStyle("location")}>
-      <Container maxWidth="md">
-        <Typography
-          sx={{ marginBottom: "20px", fontWeight: "600" }}
-          variant="h5"
-        >
-          Khám phá những điểm đến gần đây
-        </Typography>
-        <Slider {...settings}>
-          {locations.data?.map((location) => (
-            <div className={locationStyle("locationItem")} key={location.id}>
-              <Link to={`/rooms/${location.id}`}>
-                <img src={location.hinhAnh} alt="" />
-              </Link>
-              <div className={locationStyle("locationDetail")}>
-                <Typography sx={{ fontWeight: "600", fontSize: "13px" }}>
-                  {location.tinhThanh}
-                </Typography>
-                <Typography sx={{ fontSize: "12px", color: "#757575" }}>
-                  {location.tenViTri}
-                </Typography>
+    <>
+      <Box height={50} />
+      <div className={locationStyle("location")}>
+        <Container maxWidth="md">
+          <Typography
+            sx={{ marginBottom: "20px", fontWeight: "600" }}
+            variant="h5"
+          >
+            Khám phá những điểm đến gần đây
+          </Typography>
+          <Slider {...settings}>
+            {locations.data?.map((location) => (
+              <div className={locationStyle("locationItem")} key={location.id}>
+                <Link to={`/rooms/${location.id}`}>
+                  <img src={location.hinhAnh} alt="" />
+                </Link>
+                <div className={locationStyle("locationDetail")}>
+                  <Typography sx={{ fontWeight: "600", fontSize: "13px" }}>
+                    {location.tinhThanh}
+                  </Typography>
+                  <Typography sx={{ fontSize: "12px", color: "#757575" }}>
+                    {location.tenViTri}
+                  </Typography>
+                </div>
               </div>
-            </div>
-          ))}
-        </Slider>
-      </Container>
-    </div>
+            ))}
+          </Slider>
+        </Container>
+      </div>
+    </>
   );
 }
