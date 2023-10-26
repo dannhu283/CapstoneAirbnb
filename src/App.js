@@ -4,6 +4,7 @@ import MainLayout from "./layouts/MainLayout";
 import NotFound from "./Components/NotFound";
 import Home from "./modules/Home/Home";
 import "./index.css";
+import ListRoom from "./modules/ListRoom";
 import LogIn from "./modules/Auth/LogIn";
 import LogUp from "./modules/Auth/LogUp";
 
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
+            <Route path="/list-room/:placeId" element={<ListRoom />} />
           </Route>
           <Route path="/log-in" element={<LogIn />} />
           <Route path="/log-up" element={<LogUp />} />
