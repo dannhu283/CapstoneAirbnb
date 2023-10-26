@@ -24,7 +24,7 @@ import ReplyIcon from "@mui/icons-material/Reply";
 import { BackGround, Overlay } from "./index";
 import { ButtonCustom } from "../../../Components/Button";
 
-const signinShema = object({
+const logInShema = object({
   email: string().required("Email không được để trống"),
   password: string()
     .required("Mật khấu không được để trống")
@@ -49,7 +49,7 @@ export default function Login() {
       email: "",
       password: "",
     },
-    resolver: yupResolver(signinShema),
+    resolver: yupResolver(logInShema),
     mode: "onTouched",
   });
 

@@ -55,9 +55,7 @@ export default function Header() {
 
   const [open, setOpen] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [state, setState] = useState({
-    id: "",
-  });
+  const [state, setState] = useState();
   const [showBoxSearch, setShowBoxSearch] = useState(true);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
@@ -102,9 +100,7 @@ export default function Header() {
   };
 
   const handleOnChange = (e) => {
-    setState({
-      id: e.target.value,
-    });
+    setState(e.target.value);
   };
 
   const handleCloseUserMenu = (setting) => {
@@ -125,9 +121,10 @@ export default function Header() {
   if (isLoading) return <Loading />;
 
   const handleOnSubmit = (e) => {
-    // if (state.id !== "") {
-    //   navigate(`/roombycity/${state.id}`);
-    // }
+    e.preventDefault();
+    if (state !== "") {
+      navigate(`/list-room/${state}`);
+    }
   };
 
   const handleConfirmLogout = () => {
@@ -158,8 +155,13 @@ export default function Header() {
                   justifyContent: "center",
                   cursor: "pointer",
                 }}
+                onClick={() => navigate("/")}
               >
-                <img src="img/images.png" alt="logo" width={100} />
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6JQvbL_1Ti02W0tHPWhhiFWtDM7RoUaE5nA&usqp=CAU"
+                  alt="logo"
+                  width={90}
+                />
                 <Typography
                   variant="h6"
                   sx={{

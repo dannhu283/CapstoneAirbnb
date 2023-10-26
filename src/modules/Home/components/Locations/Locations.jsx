@@ -90,7 +90,7 @@ export default function Locations() {
           <Slider {...settings}>
             {locations.data?.map((location) => (
               <div className={locationStyle("locationItem")} key={location.id}>
-                <Link to={`/rooms/${location.id}`}>
+                <Link to={`/list-room/${location.id}`}>
                   <img src={location.hinhAnh} alt="" />
                 </Link>
                 <div className={locationStyle("locationDetail")}>

@@ -44,5 +44,5 @@ export const BoxSearch = styled.div`
     rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   margin: 15px 15%;
   border-radius: 40px;
-  padding: 15px;
+  padding: 12px;
 `;
