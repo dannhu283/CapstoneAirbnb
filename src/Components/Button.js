@@ -32,3 +32,15 @@ export const ButtonCustom = styled.button`
     color: black;
   }
 `;
+
+export const ButtonFill = styled.button`
+  background-color: #f1f2f6;
+  padding: 10px;
+  border-radius: 20px;
+  border: 2px solid #ced6e0;
+  cursor: pointer;
+  &:hover {
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    background-color: #ced6e0;
+  }
+`;
