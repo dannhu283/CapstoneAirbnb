@@ -19,7 +19,8 @@ import IconButton from "@mui/material/IconButton";
 import ReplyIcon from "@mui/icons-material/Reply";
 import { logup } from "../../../APIs/userApi";
 import { BackGround, Overlay } from "./index";
-import { ButtonCustom } from "../../../Components/Button";
+import { ButtonCustom, ButtonMain } from "../../../Components/Button";
+import { ModalSuccess, ModalContent } from "../../../Components/Modal";
 
 //yup validation
 const signupShema = object({
@@ -39,6 +40,8 @@ const signupShema = object({
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -62,7 +65,7 @@ export default function Signup() {
   } = useMutation({
     mutationFn: (payload) => logup(payload),
     onSuccess: () => {
-      navigate("/log-in");
+      setShowSuccessModal(true);
     },
   });
 
@@ -209,6 +212,31 @@ export default function Signup() {
           </Paper>
         </Container>
       </Overlay>
+      {showSuccessModal && (
+        <ModalSuccess>
+          <ModalContent>
+            <img
+              style={{ width: "120px", marginTop: "10px" }}
+              src="/img/animation_lnfs5c14_small.gif"
+              alt="confirm"
+            />
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: "bold",
+                marginBottom: "40px",
+                color: " #f43f5e",
+              }}
+            >
+              Đăng kí thành công
+            </Typography>
+
+            <ButtonMain onClick={() => navigate("/log-in")}>
+              Đi đến trang đăng nhập
+            </ButtonMain>
+          </ModalContent>
+        </ModalSuccess>
+      )}
     </Box>
   );
 }

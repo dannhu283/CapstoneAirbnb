@@ -6,9 +6,11 @@ import { Box, Container, Grid, Typography } from "@mui/material";
 import RoomItem from "./RoomItem";
 import RoomMap from "./RoomMap";
 import { useParams } from "react-router-dom";
+import { useMediaQuery } from "@mui/material";
 
 export default function ListRoom() {
   const { placeId } = useParams();
+  const isMediumScreen = useMediaQuery("(min-width: 876px)");
 
   const { data: listRoom, isLoading } = useQuery({
     queryKey: ["listRoom", placeId],
@@ -38,9 +40,11 @@ export default function ListRoom() {
             <Grid item md={7}>
               <RoomItem listRoom={listRoom} />
             </Grid>
-            <Grid item md={5}>
-              <RoomMap />
-            </Grid>
+            {isMediumScreen && (
+              <Grid item md={5}>
+                <RoomMap />
+              </Grid>
+            )}
           </Grid>
         )}
       </Container>
