@@ -25,8 +25,7 @@ export default function Feedback({ roomId }) {
     handleSubmit,
     register,
     control,
-    formState: { errors },
-    setValue,
+    formState: setValue,
   } = useForm({
     defaultValues: {
       noiDung: "",
@@ -93,7 +92,7 @@ export default function Feedback({ roomId }) {
         ))}
       </Grid>
 
-    {/* Kiểm tra User  */}
+      {/* Kiểm tra User  */}
       {user && (
         <Box
           component="form"
@@ -136,7 +135,9 @@ export default function Feedback({ roomId }) {
           </div>
         </Box>
       )}
-      <Button sx={{fontWeight:'500',fontSize:'16px'}} variant="outlined">Hiển thị tất cả đánh giá</Button>
+      <Button sx={{ fontWeight: "500", fontSize: "16px" }} variant="outlined">
+        Hiển thị tất cả đánh giá
+      </Button>
     </div>
   );
 }

@@ -53,7 +53,7 @@ export default function Header() {
     settings = settings.filter((item) => !item.includes("Đăng xuất"));
   }
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [state, setState] = useState();
   const [showBoxSearch, setShowBoxSearch] = useState(true);
@@ -68,7 +68,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 10) {
+      if (window.scrollY > 3) {
         // Show BoxSearch when scrolled down 100 pixels (you can adjust this value)
         setShowBoxSearch(false);
       } else {
@@ -211,7 +211,9 @@ export default function Header() {
                       "&:hover": { color: "#f43f5e" },
                     }}
                   >
-                    Đón tiếp khách
+                    {currentUser
+                      ? `Xin chào, ${currentUser?.user?.name}`
+                      : "Đón tiếp khách"}
                   </Typography>
                   <IconButton>
                     <LanguageIcon

@@ -12,8 +12,8 @@ export const ButtonMain = styled.button`
   cursor: pointer;
   &:hover {
     color: white;
-    background-color: #ff9f1a;
-    border: 2px dashed #ff9f1a;
+    background-color: #f43f5e;
+    border: 2px dashed #f43f5e;
   }
 `;
 
@@ -34,6 +34,7 @@ export const ButtonCustom = styled.button`
 `;
 
 export const ButtonFill = styled.button`
+  width: 100%;
   background-color: #f1f2f6;
   padding: 10px;
   border-radius: 20px;

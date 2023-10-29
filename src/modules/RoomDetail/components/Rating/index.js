@@ -1,4 +1,1 @@
-import styled from '@emotion/styled'
-export {default} from "./Rating"
-
-
+export { default } from "./Rating";

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PersonPinCircleOutlinedIcon from "@mui/icons-material/PersonPinCircleOutlined";
 import styled from "./RoomUtilities.module.scss";
-import { Box, Button, Grid, Tooltip, Typography } from "@mui/material";
+import { Button, Grid, Tooltip, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import LocalLaundryServiceIcon from "@mui/icons-material/LocalLaundryService";
 import IronIcon from "@mui/icons-material/Iron";
@@ -92,7 +92,9 @@ export default function RoomUtilities({ roomDetail }) {
         </div>
       </div>
       <div className={styled.utilities}>
-        <Typography sx={{ fontSize: "20px", fontWeight: "600",marginBottom:'10px' }}>
+        <Typography
+          sx={{ fontSize: "20px", fontWeight: "600", marginBottom: "10px" }}
+        >
           Nơi này có những gì cho bạn
         </Typography>
         <Grid container maxWidth={500}>
@@ -115,7 +117,7 @@ export default function RoomUtilities({ roomDetail }) {
                 <IconButton
                   sx={{ paddingLeft: "0", "&:hover": { color: "#f43f5e" } }}
                 >
-                  <LocalLaundryServiceIcon sx={{fontSize:'35px'}}/>
+                  <LocalLaundryServiceIcon sx={{ fontSize: "35px" }} />
                 </IconButton>
               </Tooltip>
             </Grid>
@@ -141,7 +143,7 @@ export default function RoomUtilities({ roomDetail }) {
                 <IconButton
                   sx={{ paddingLeft: "0", "&:hover": { color: "#f43f5e" } }}
                 >
-                  <IronIcon sx={{fontSize:'35px'}} />
+                  <IronIcon sx={{ fontSize: "35px" }} />
                 </IconButton>
               </Tooltip>
             </Grid>
@@ -167,7 +169,7 @@ export default function RoomUtilities({ roomDetail }) {
                 <IconButton
                   sx={{ paddingLeft: "0", "&:hover": { color: "#f43f5e" } }}
                 >
-                  <PoolIcon sx={{fontSize:'35px'}}/>
+                  <PoolIcon sx={{ fontSize: "35px" }} />
                 </IconButton>
               </Tooltip>
             </Grid>
@@ -183,7 +185,6 @@ export default function RoomUtilities({ roomDetail }) {
                 alignItems: "center",
                 flexDirection: "row-reverse",
                 justifyContent: "flex-end",
-                marginBottom: "5px",
                 marginBottom: "10px",
               }}
             >
@@ -196,7 +197,7 @@ export default function RoomUtilities({ roomDetail }) {
                 <IconButton
                   sx={{ paddingLeft: "0", "&:hover": { color: "#f43f5e" } }}
                 >
-                  <AirplayIcon sx={{fontSize:'35px'}}/>
+                  <AirplayIcon sx={{ fontSize: "35px" }} />
                 </IconButton>
               </Tooltip>
             </Grid>
@@ -222,7 +223,7 @@ export default function RoomUtilities({ roomDetail }) {
                 <IconButton
                   sx={{ paddingLeft: "0", "&:hover": { color: "#f43f5e" } }}
                 >
-                  <AcUnitIcon sx={{fontSize:'35px'}}/>
+                  <AcUnitIcon sx={{ fontSize: "35px" }} />
                 </IconButton>
               </Tooltip>
             </Grid>
@@ -248,7 +249,7 @@ export default function RoomUtilities({ roomDetail }) {
               </Typography>
               <Tooltip title="Bếp" placement="top">
                 <IconButton sx={{ "&:hover": { color: "#f43f5e" } }}>
-                  <CountertopsIcon sx={{fontSize:'35px'}}/>
+                  <CountertopsIcon sx={{ fontSize: "35px" }} />
                 </IconButton>
               </Tooltip>
             </Grid>
@@ -274,16 +275,20 @@ export default function RoomUtilities({ roomDetail }) {
                 <IconButton
                   sx={{ paddingLeft: "0", "&:hover": { color: "#f43f5e" } }}
                 >
-                  <LocalParkingIcon sx={{fontSize:'35px'}}/>
+                  <LocalParkingIcon sx={{ fontSize: "35px" }} />
                 </IconButton>
               </Tooltip>
             </Grid>
           ) : (
             ""
           )}
-          
         </Grid>
-        <Button sx={{margin:'20px 0',fontWeight:'500',fontSize:'16px'}} variant="outlined">Hiển thị tất cả 75 tiện nghi</Button>
+        <Button
+          sx={{ margin: "20px 0", fontWeight: "500", fontSize: "16px" }}
+          variant="outlined"
+        >
+          Hiển thị tất cả 75 tiện nghi
+        </Button>
       </div>
     </div>
   );

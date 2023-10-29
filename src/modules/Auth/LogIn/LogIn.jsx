@@ -37,6 +37,7 @@ const logInShema = object({
 export default function Login() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+
   const { currentUser, handleSignin: onLoginSuccess } = useUserContext();
 
   const [searchParams] = useSearchParams();
