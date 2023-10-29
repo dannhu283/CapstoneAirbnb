@@ -1,0 +1,11 @@
+.bookingRoom{
+  margin-top: 15px;
+  background-color: blue;
+  .bookingContent{
+    padding: 20px;
+    .bookingTitle {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

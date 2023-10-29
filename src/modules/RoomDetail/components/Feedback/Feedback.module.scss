@@ -1,0 +1,16 @@
+.feedback{
+  padding: 30px 0;
+  .feedbackItem{
+    display: flex;
+    
+    .feedbackDetail{
+      margin-left: 15px;
+    }
+  }
+  .addComment{
+    display: flex;
+  }
+  .btnAddComment{
+    padding-left: 53px;
+  }
+}

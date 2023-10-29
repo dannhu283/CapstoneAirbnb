@@ -8,7 +8,14 @@ export async function getLocation() {
     throw error.response.data.content;
   }
 }
-
+export async function getLocationById(roomId) {
+  try {
+    const response = await fetcher.get(`/vi-tri/${roomId}`);
+    return response.data.content;
+  } catch (error) {
+    throw error.response.data.content;
+  }
+}
 
 export async function getLocations() {
   try {

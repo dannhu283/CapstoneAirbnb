@@ -34,7 +34,7 @@ import { useUserContext } from "../../context/UserContext/UserContext";
 export default function Header() {
   const { currentUser, handleSignout } = useUserContext();
 
-  const isUser = currentUser?.user.role.toLowerCase() === "user";
+  const isUser = currentUser?.user?.role.toLowerCase() === "user";
 
   let settings = [
     "Đăng kí",
