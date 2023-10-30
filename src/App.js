@@ -8,6 +8,8 @@ import ListRoom from "./modules/ListRoom";
 import LogIn from "./modules/Auth/LogIn";
 import LogUp from "./modules/Auth/LogUp";
 import RoomDetail from "./modules/RoomDetail";
+import ProtectedRoute from "./routers/ProtectedRoute";
+import Profile from "./modules/Profile";
 
 function App() {
   return (
@@ -17,7 +19,11 @@ function App() {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="list-room/:placeId" element={<ListRoom />} />
-            <Route path ="roomDetail/:roomId" element={<RoomDetail/>}/>
+            <Route path="roomDetail/:roomId" element={<RoomDetail />} />
+
+            <Route element={<ProtectedRoute />}>
+              <Route path="profile/:userId" element={<Profile />} />
+            </Route>
           </Route>
           <Route path="/log-in" element={<LogIn />} />
           <Route path="/log-up" element={<LogUp />} />

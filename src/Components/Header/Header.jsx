@@ -137,6 +137,11 @@ export default function Header() {
     setShowSuccessModal(false);
   };
 
+  const handleClickInfor = () => {
+    setAnchorElUser(null);
+    navigate(`/profile/${currentUser.user.id}`);
+  };
+
   return (
     <AppBar
       position="fixed"
@@ -252,7 +257,7 @@ export default function Header() {
                 >
                   {isUser && (
                     <Box>
-                      <MenuItem>
+                      <MenuItem onClick={handleClickInfor}>
                         <Typography fontWeight="bold">Trang cá nhân</Typography>
                       </MenuItem>
                       <MenuItem>

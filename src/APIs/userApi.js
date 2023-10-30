@@ -17,3 +17,16 @@ export const logup = async (payload) => {
     throw error.response.data?.content;
   }
 };
+
+export const getInfor = async (userId) => {
+  try {
+    const response = await fetcher.get("/users", {
+      params: {
+        id: userId,
+      },
+    });
+    return response.data?.content;
+  } catch (error) {
+    throw error.response.data?.content;
+  }
+};
