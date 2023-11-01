@@ -12,5 +12,9 @@ export default function ProtectedRoute({ children }) {
     return <Navigate to={url} replace />;
   }
 
+  // if (currentUser.content !== "QuanTri") {
+  //   return <Navigate to="/404" />;
+  // }
+
   return children || <Outlet />;
 }
