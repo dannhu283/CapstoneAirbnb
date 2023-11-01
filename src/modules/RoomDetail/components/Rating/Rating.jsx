@@ -4,8 +4,8 @@ import StarIcon from "@mui/icons-material/Star";
 import StarRating from "@mui/material/Rating";
 import styled from "./Rating.module.scss";
 
-
-export default function Rating() {
+export default function Rating({ totalReviews,averageRating }) {
+ 
   return (
     <div className={styled.rating}>
       <Typography
@@ -18,7 +18,7 @@ export default function Rating() {
         }}
       >
         <StarIcon sx={{ fontSize: "25px", marginRight: "5px" }} />
-        4,0 ·<span>25 đánh giá</span>
+        {averageRating} ·<span>{totalReviews} đánh giá</span>
       </Typography>
       <Grid container spacing={3}>
         <Grid md={6} item>
