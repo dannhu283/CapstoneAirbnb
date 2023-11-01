@@ -36,25 +36,30 @@ export default function RoomUtilities({ roomDetail }) {
         </div>
       </div>
       <div className={styled.detailDesc}>
-        <div className={styled.descItem}>
-          <p>
-            <PersonPinCircleOutlinedIcon
-              color="action"
-              sx={{ marginTop: "3px", fontSize: "40px", marginRight: "15px" }}
-            />{" "}
-          </p>
-          <div className={styled.descRight}>
-            <Typography
-              sx={{ fontWeight: "600", fontSize: "16px" }}
-              variant="h6"
-            >
-              {host}
-            </Typography>
-            <Typography sx={{ color: "rgb(113, 113, 113)", fontSize: "15px" }}>
-              {decsHost}
-            </Typography>
+        {host && (
+          <div className={styled.descItem}>
+            <p>
+              <PersonPinCircleOutlinedIcon
+                color="action"
+                sx={{ marginTop: "3px", fontSize: "40px", marginRight: "15px" }}
+              />{" "}
+            </p>
+            <div className={styled.descRight}>
+              <Typography
+                sx={{ fontWeight: "600", fontSize: "16px" }}
+                variant="h6"
+              >
+                {host}
+              </Typography>
+              <Typography
+                sx={{ color: "rgb(113, 113, 113)", fontSize: "15px" }}
+              >
+                {decsHost}
+              </Typography>
+            </div>
           </div>
-        </div>
+        )}
+
         <div className={styled.descItem}>
           <p>
             <WhereToVoteOutlinedIcon

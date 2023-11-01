@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import roomDetailStyle from "./RoomDetail.module.scss";
 import { useQuery } from "@tanstack/react-query";
 import { getRoomDetail } from "../../APIs/roomApi";
@@ -14,18 +14,33 @@ import Rating from "./components/Rating";
 import Feedback from "./components/Feedback/Feedback";
 const styled = cn.bind(roomDetailStyle)
 export default function RoomDetail() {
+  const [comments,setComments] = useState([])
   const { roomId } = useParams();
   const { data: roomDetail = {} } = useQuery({
     queryKey: ["roomDetail"],
     queryFn: () => getRoomDetail(roomId),
     enabled: !!roomId,
   });
+  
   const { data: locationDetail = {} } = useQuery({
     queryKey: ["locationDetail"],
     queryFn: () => getLocationById(roomId),
     enabled: !!roomId,
   });
-  
+  // Lấy giá tiền 
+  const price = roomDetail?.giaTien
+  // Lấy số lượng feedbacks
+  const handleGetFeedback = (feedbacks)=>{
+    setComments(feedbacks)
+  }
+  // Counts Star
+  const ratingStar = comments.reduce((result, review) => {
+    const totalStar = result + review.saoBinhLuan;
+    return totalStar;
+  }, 0);
+  const totalReviews = comments.length;
+  // Trung bình đánh giá
+  const averageRating = (ratingStar / totalReviews).toFixed(1);
 
   return (
     <div className={styled("roomDetail")}>
@@ -35,8 +50,8 @@ export default function RoomDetail() {
             <p className={styled("roomName")}>{roomDetail.tenPhong}</p>
             <div className={styled("locationDetail")}>
               <p className={styled("rateItem","locationFlex")}>
-                <StarIcon sx={{ marginRight: "3px", fontSize: "17px" }} /> 5,0 ·
-                <span>20 đánh giá</span>
+                <StarIcon sx={{ marginRight: "3px", fontSize: "17px" }} /> {totalReviews === 0 ? 0 :averageRating } ·
+                <span>{totalReviews} đánh giá</span>
               </p>
               <p className={styled("locationIcon","locationFlex")}>
                 ·
@@ -55,11 +70,11 @@ export default function RoomDetail() {
             <RoomUtilities roomDetail={roomDetail}/>
           </Grid>
           <Grid item md={4}>
-            <BookingRoom/>
+            <BookingRoom roomId={roomId} price={price} averageRating={totalReviews === 0 ? 0 :averageRating } totalReviews={totalReviews}   />
           </Grid>
         </Grid>
-        <Rating/>
-        <Feedback roomId={roomId}/>
+        <Rating averageRating={totalReviews === 0 ? 0 :averageRating } totalReviews={totalReviews} />
+        <Feedback onGetFeedbacks={handleGetFeedback} roomId={roomId}/>
       </Container>
     </div>
   );

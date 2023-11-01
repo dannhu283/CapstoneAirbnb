@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getFeedbacks, postFeedbacks } from "../../../../APIs/feedback";
 import {
@@ -13,7 +13,7 @@ import styled from "./Feedback.module.scss";
 import dayjs from "dayjs";
 import { useUserContext } from "../../../../context/UserContext/UserContext";
 import { Controller, useForm } from "react-hook-form";
-export default function Feedback({ roomId }) {
+export default function Feedback({ roomId,onGetFeedbacks }) {
   const queryClient = useQueryClient();
   const { currentUser } = useUserContext();
   // Thông tin user
@@ -38,7 +38,7 @@ export default function Feedback({ roomId }) {
     queryKey: ["comments"],
     queryFn: () => getFeedbacks(roomId),
   });
-
+  
   // Gọi API post comments
   const { mutate: onSuccess } = useMutation({
     mutationFn: (valuesForm) => {
@@ -58,7 +58,11 @@ export default function Feedback({ roomId }) {
       setValue("saoBinhLuan", 0);
     },
   });
-
+  useEffect(()=>{
+    if(feedbacks.length > 0){
+      onGetFeedbacks(feedbacks)
+    }
+  },[feedbacks])
   return (
     <div className={styled.feedback}>
       <Grid container>
