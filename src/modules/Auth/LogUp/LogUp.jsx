@@ -85,7 +85,7 @@ export default function Signup() {
             elevation={3}
             sx={{
               position: "relative",
-              marginTop: "50%",
+              marginTop: "15%",
               padding: "20px",
               display: "flex",
               flexDirection: "column",
