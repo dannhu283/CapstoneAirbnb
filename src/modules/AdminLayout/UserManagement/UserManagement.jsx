@@ -33,6 +33,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SearchIcon from "@mui/icons-material/Search";
 import Loading from "../../../Components/Loading";
+import AddUser from "./AddUser";
 // import UserModal from "./UpdateUser";
 import { removeUser } from "../../../APIs/userApi";
 import { ModalContent } from "../../../Components/Modal";
@@ -128,7 +129,6 @@ export default function UserManagement() {
     queryKey: ["infors"],
     queryFn: getInfor,
   });
-  console.log(infors);
 
   const { mutate: handleDeleteUser } = useMutation({
     mutationFn: (id) => removeUser(id),
@@ -195,7 +195,7 @@ export default function UserManagement() {
   // Function to filter users based on search query
   const filterUsers = () => {
     const filteredData = infors.filter((infor) =>
-      infor.taiKhoan.toLowerCase().includes(searchQuery.toLowerCase())
+      infor.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredUsers(filteredData);
   };
@@ -253,7 +253,7 @@ export default function UserManagement() {
         >
           <TextField
             fullWidth
-            label="Tìm kiếm tài khoản"
+            label="Tìm kiếm tài khoản theo tên"
             id="fullWidth"
             color="secondary"
             value={searchQuery}
@@ -415,16 +415,16 @@ export default function UserManagement() {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: 1000,
-            height: 400,
+            width: "70%",
+            height: "60%",
             bgcolor: "background.paper",
             border: "1px solid #fff",
+            borderRadius: "50px",
             boxShadow: 24,
             p: 4,
           }}
         >
-          {/* Hiển thị form hoặc nội dung modal */}
-          {/* <AddUser onClose={handleCloseAddUser} /> */}
+          <AddUser onClose={handleCloseAddUser} />
         </Box>
       </Modal>
 
@@ -476,9 +476,9 @@ export default function UserManagement() {
       <Stack spacing={2} sx={{ width: "100%" }}>
         <Snackbar
           open={openStack}
-          autoHideDuration={6000}
+          autoHideDuration={3000}
           onClose={handleCloseStack}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           <Alert
             onClose={handleCloseStack}
