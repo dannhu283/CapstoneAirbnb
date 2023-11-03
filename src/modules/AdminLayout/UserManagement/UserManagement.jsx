@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Backdrop,
   Box,
@@ -35,7 +35,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import Loading from "../../../Components/Loading";
 // import UserModal from "./UpdateUser";
 import { removeUser } from "../../../APIs/userApi";
-import { ModalSuccess, ModalContent } from "../../../Components/Modal";
+import { ModalContent } from "../../../Components/Modal";
 import { ButtonCustom, ButtonMain } from "../../../Components/Button";
 
 function TablePaginationActions(props) {
@@ -108,19 +108,19 @@ TablePaginationActions.propTypes = {
 };
 
 export default function UserManagement() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [open, setOpen] = React.useState(false);
-  const [openAddUser, setOpenAddUser] = React.useState(false);
-  const [openBackdrop, setOpenBackdrop] = React.useState(false);
-  const [openDelete, setOpenDelete] = React.useState(false);
-  const [userName, setUserName] = React.useState("");
-  const [infoUser, setInfoUser] = React.useState({});
-  const [isLoadingInfoUser, setIsLoadingInfoUser] = React.useState(false);
-  const [selectedUser, setSelectedUser] = React.useState(null);
-  const [openSuccess, setOpenSuccess] = React.useState(false);
-  const [searchQuery, setSearchQuery] = React.useState("");
-  const [filteredUsers, setFilteredUsers] = React.useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [open, setOpen] = useState(false);
+  const [openAddUser, setOpenAddUser] = useState(false);
+  const [openBackdrop, setOpenBackdrop] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [infoUser, setInfoUser] = useState({});
+  const [isLoadingInfoUser, setIsLoadingInfoUser] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [openStack, setOpenStack] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -130,10 +130,10 @@ export default function UserManagement() {
   });
   console.log(infors);
 
-  const { mutate: handleDeleteUser, error } = useMutation({
+  const { mutate: handleDeleteUser } = useMutation({
     mutationFn: (id) => removeUser(id),
     onSuccess: () => {
-      setOpenSuccess(true);
+      handleClick();
       queryClient.invalidateQueries({ queryKey: ["infors"] });
     },
   });
@@ -180,8 +180,16 @@ export default function UserManagement() {
     setOpenDelete(false);
   };
 
-  const handleCloseSuccess = () => {
-    setOpenSuccess(false);
+  const handleClick = () => {
+    setOpenStack(true);
+  };
+
+  const handleCloseStack = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenStack(false);
   };
 
   // Function to filter users based on search query
@@ -467,13 +475,13 @@ export default function UserManagement() {
 
       <Stack spacing={2} sx={{ width: "100%" }}>
         <Snackbar
-          open={open}
+          open={openStack}
           autoHideDuration={6000}
-          onClose={handleClose}
+          onClose={handleCloseStack}
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
         >
           <Alert
-            onClose={handleClose}
+            onClose={handleCloseStack}
             severity="success"
             sx={{ width: "100%" }}
           >
