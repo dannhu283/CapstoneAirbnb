@@ -33,7 +33,7 @@ export default function AdminLayout() {
               <Box sx={{ margin: "5% 0 0 40%" }}>
                 <ButtonMain
                   style={{ marginRight: "20px" }}
-                  onClick={() => navigate("")}
+                  onClick={() => navigate("usermanagement")}
                 >
                   Quản lí người dùng
                 </ButtonMain>

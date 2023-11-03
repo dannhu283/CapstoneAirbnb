@@ -204,7 +204,7 @@ export default function DrawerAdmin() {
             <List>
               <ListItemButton sx={{ minHeight: 60 }}>
                 {open && <ChevronRightIcon />}
-                <Link to="" className={AdminStyle.link}>
+                <Link to="/admin/usermanagement" className={AdminStyle.link}>
                   {open ? (
                     <ListItemText primary=" Quản Lý User" />
                   ) : (
