@@ -20,9 +20,27 @@ export const logup = async (payload) => {
 
 export const getInfor = async (userId) => {
   try {
-    const response = await fetcher.get("/users", {
+    const response = await fetcher.get("/users");
+    return response.data?.content;
+  } catch (error) {
+    throw error.response.data?.content;
+  }
+};
+
+export const addUser = async (payload) => {
+  try {
+    const response = await fetcher.post("/users", payload);
+    return response.data?.content;
+  } catch (error) {
+    throw error.response.data?.content;
+  }
+};
+
+export const removeUser = async (id) => {
+  try {
+    const response = await fetcher.delete("/users", {
       params: {
-        id: userId,
+        id: id || undefined,
       },
     });
     return response.data?.content;

@@ -11,6 +11,7 @@ import RoomDetail from "./modules/RoomDetail";
 import ProtectedRoute from "./routers/ProtectedRoute";
 import Profile from "./modules/Profile";
 import AdminLayout from "./modules/AdminLayout/AdminLayout";
+import UserManagement from "./modules/AdminLayout/UserManagement/UserManagement";
 
 function App() {
   return (
@@ -31,7 +32,9 @@ function App() {
           <Route path="/log-up" element={<LogUp />} />
 
           {/* Admin */}
-          <Route path="/admin" element={<AdminLayout />}></Route>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="usermanagement" element={<UserManagement />} />
+          </Route>
 
           <Route path="*" element={<NotFound />} />
         </Routes>
