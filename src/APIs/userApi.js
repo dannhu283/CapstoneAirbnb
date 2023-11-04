@@ -20,6 +20,9 @@ export const logup = async (payload) => {
 
 export const getInfor = async (userId) => {
   try {
+<<<<<<< HEAD
+    const response = await fetcher.get(`/users/${userId}`);
+=======
     const response = await fetcher.get("/users");
     return response.data?.content;
   } catch (error) {
@@ -43,6 +46,25 @@ export const removeUser = async (id) => {
         id: id || undefined,
       },
     });
+>>>>>>> master
+    return response.data?.content;
+  } catch (error) {
+    throw error.response.data?.content;
+  }
+};
+
+export const updateAvatarUser = async (payload) => {
+  try {
+    const response = await fetcher.post("/users/upload-avatar",payload);
+    return response.data?.content;
+  } catch (error) {
+    throw error.response.data?.content;
+  }
+};
+
+export const updateUser = async (userId,payload) => {
+  try {
+    const response = await fetcher.put(`/users/${userId}`,payload);
     return response.data?.content;
   } catch (error) {
     throw error.response.data?.content;

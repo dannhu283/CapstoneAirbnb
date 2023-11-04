@@ -20,7 +20,6 @@ export default function BookingRoom({
 }) {
   // Lấy thông tin User
   const { currentUser } = useUserContext();
-  console.log(currentUser);
   // Lấy danh sách phòng xem đã đặt hay chưa
   const { data: ListOfRoomIsBooked = [] } = useQuery({
     queryKey: ["isBooked"],
@@ -54,8 +53,12 @@ export default function BookingRoom({
       queriClient.invalidateQueries({ queryKey: ["isBooked"] });
     },
   });
+<<<<<<< HEAD
+  
+=======
 
   console.log(selectionRange);
+>>>>>>> master
   useEffect(() => {
     document.addEventListener("click", clickOutSide, true);
     document.addEventListener("keydown", escKey, true);
