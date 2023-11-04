@@ -419,7 +419,6 @@ export default function UserManagement() {
             height: "60%",
             bgcolor: "background.paper",
             border: "1px solid #fff",
-            borderRadius: "50px",
             boxShadow: 24,
             p: 4,
           }}
