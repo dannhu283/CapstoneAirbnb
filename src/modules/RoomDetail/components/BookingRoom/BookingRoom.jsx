@@ -33,7 +33,7 @@ export default function BookingRoom({
     key: "selection",
   });
   const refCalendar = useRef(null);
-  const queriClient = useQueryClient()
+  const queriClient = useQueryClient();
   const [count, setCount] = useState(1);
   const [countDays, setCountDays] = useState(0);
 
@@ -44,16 +44,21 @@ export default function BookingRoom({
         maPhong: roomId,
         ngayDen: dayjs(selectionRange.startDate).format(),
         ngayDi: dayjs(selectionRange.endDate).format(),
-        soLuongKhach:count,
-        maNguoiDung:currentUser.user.id
+        soLuongKhach: count,
+        maNguoiDung: currentUser.user.id,
       };
       return bookingRoom(valueForm);
     },
-    onSuccess:()=>{
-      queriClient.invalidateQueries({queryKey:['isBooked']})
-    }
+    onSuccess: () => {
+      queriClient.invalidateQueries({ queryKey: ["isBooked"] });
+    },
   });
+<<<<<<< HEAD
   
+=======
+
+  console.log(selectionRange);
+>>>>>>> master
   useEffect(() => {
     document.addEventListener("click", clickOutSide, true);
     document.addEventListener("keydown", escKey, true);
@@ -178,7 +183,11 @@ export default function BookingRoom({
             </div>
           </div>
           <div className={styled.btnBookingItem}>
-            <button onClick={onSuccess} type="submit" className={styled.btnBooking}>
+            <button
+              onClick={onSuccess}
+              type="submit"
+              className={styled.btnBooking}
+            >
               Đặt phòng
             </button>
           </div>

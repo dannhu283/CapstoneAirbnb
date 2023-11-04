@@ -10,12 +10,15 @@ import LogUp from "./modules/Auth/LogUp";
 import RoomDetail from "./modules/RoomDetail";
 import ProtectedRoute from "./routers/ProtectedRoute";
 import Profile from "./modules/Profile";
+import AdminLayout from "./modules/AdminLayout/AdminLayout";
+import UserManagement from "./modules/AdminLayout/UserManagement/UserManagement";
 
 function App() {
   return (
     <UserProvider>
       <BrowserRouter>
         <Routes>
+          {/* User */}
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="list-room/:placeId" element={<ListRoom />} />
@@ -27,6 +30,11 @@ function App() {
           </Route>
           <Route path="/log-in" element={<LogIn />} />
           <Route path="/log-up" element={<LogUp />} />
+
+          {/* Admin */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="usermanagement" element={<UserManagement />} />
+          </Route>
 
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -51,6 +51,7 @@ export default function Header() {
     );
   } else {
     settings = settings.filter((item) => !item.includes("Đăng xuất"));
+    settings.push("Admin");
   }
 
   const [open, setOpen] = useState(false);
@@ -111,6 +112,8 @@ export default function Header() {
       navigate("/log-up");
     } else if (setting === "Đăng xuất") {
       handleConfirmLogout();
+    } else if (setting === "Admin") {
+      navigate("/admin");
     }
   };
 
