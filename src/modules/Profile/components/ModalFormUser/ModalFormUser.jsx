@@ -1,11 +1,6 @@
 import React, { useEffect } from "react";
 import { ModalContent, ModalSuccess } from "../../../../Components/Modal";
-import {
-  Box,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Grid, TextField, Typography } from "@mui/material";
 import { ButtonCustom } from "../../../../Components/Button";
 import { Link } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { object, string } from "yup";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getInfor, updateUser } from "../../../../APIs/userApi";
+
 const signupShema = object({
   name: string().required("Tên không được để trống"),
   email: string()
@@ -22,8 +18,8 @@ const signupShema = object({
   birthday: string().required("Ngày sinh không được để trống"),
 });
 
-export default function ModalFormUser({ userId, user,onCloseFormUser }) {
-  const queryClient = useQueryClient()
+export default function ModalFormUser({ userId, user, onCloseFormUser }) {
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -46,8 +42,8 @@ export default function ModalFormUser({ userId, user,onCloseFormUser }) {
   } = useMutation({
     mutationFn: (payload) => updateUser(userId, payload),
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey:['user']})
-      onCloseFormUser(false)
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      onCloseFormUser(false);
     },
   });
   const onSubmit = (values) => {
@@ -77,7 +73,12 @@ export default function ModalFormUser({ userId, user,onCloseFormUser }) {
     <ModalSuccess>
       <Box sx={{ marginTop: "90px" }}>
         <ModalContent>
-          <Typography onClick={()=>onCloseFormUser(false)} sx={{textAlign:'end',fontSize:'20px',cursor:'pointer'}}>X</Typography>
+          <Typography
+            onClick={() => onCloseFormUser(false)}
+            sx={{ textAlign: "end", fontSize: "20px", cursor: "pointer" }}
+          >
+            X
+          </Typography>
           <form
             onSubmit={handleSubmit(onSubmit)}
             style={{ width: "100%", marginTop: "20px" }}
@@ -131,7 +132,14 @@ export default function ModalFormUser({ userId, user,onCloseFormUser }) {
                   helperText={errors.birthday && errors.birthday.message}
                 />
               </Grid>
-              {error && <Typography sx={{textAlign:'center',width:'100%',marginTop:'10px'}} color="red">{error}</Typography>}
+              {error && (
+                <Typography
+                  sx={{ textAlign: "center", width: "100%", marginTop: "10px" }}
+                  color="red"
+                >
+                  {error}
+                </Typography>
+              )}
             </Grid>
             <ButtonCustom
               type="submit"

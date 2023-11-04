@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Backdrop,
   Box,
   Button,
-  CircularProgress,
   Modal,
   TextField,
   Typography,
@@ -22,7 +20,7 @@ import {
 } from "@mui/material";
 import { StyledTableCell, StyledTableRow } from "./index";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getInfor } from "../../../APIs/userApi";
+import { getListInfor } from "../../../APIs/userApi";
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
@@ -34,7 +32,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import SearchIcon from "@mui/icons-material/Search";
 import Loading from "../../../Components/Loading";
 import AddUser from "./AddUser";
-// import UserModal from "./UpdateUser";
+import UpdateUser from "./UpdateUser/UpdateUser";
 import { removeUser } from "../../../APIs/userApi";
 import { ModalContent } from "../../../Components/Modal";
 import { ButtonCustom, ButtonMain } from "../../../Components/Button";
@@ -113,11 +111,8 @@ export default function UserManagement() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = useState(false);
   const [openAddUser, setOpenAddUser] = useState(false);
-  const [openBackdrop, setOpenBackdrop] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [userName, setUserName] = useState("");
-  const [infoUser, setInfoUser] = useState({});
-  const [isLoadingInfoUser, setIsLoadingInfoUser] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -127,7 +122,7 @@ export default function UserManagement() {
 
   const { data: infors = [], isLoading } = useQuery({
     queryKey: ["infors"],
-    queryFn: getInfor,
+    queryFn: getListInfor,
   });
 
   const { mutate: handleDeleteUser } = useMutation({
@@ -151,16 +146,15 @@ export default function UserManagement() {
     setPage(0);
   };
 
-  const handleOpen = (username) => {
-    setUserName(username);
-    setIsLoadingInfoUser(true); // Bắt đầu tải dữ liệu
+  const handleOpen = (userId) => {
+    setUserName(userId);
     setOpen(true);
+    console.log(userId);
   };
 
   const handleClose = () => {
     setUserName("");
     setOpen(false);
-    setOpenBackdrop(false);
   };
 
   const handleOpenAddUser = () => {
@@ -216,21 +210,8 @@ export default function UserManagement() {
     }
   };
 
-  // React.useEffect(() => {
-  //   if (userName) {
-  //     setIsLoadingInfoUser(true);
-  //     setOpenBackdrop(true);
-  //     // Gọi API để lấy infoUser khi userName đã có giá trị
-  //     getInfoUser(userName).then((data) => {
-  //       setInfoUser(data);
-  //       setIsLoadingInfoUser(false); // Dừng trạng thái tải
-  //     });
-  //   }
-  // }, [userName]);
-
-  React.useEffect(() => {
+  useEffect(() => {
     if (infors) {
-      //  setInitialData(customers);
       setFilteredUsers(infors); // Ban đầu, filteredUsers bằng danh sách customers
     }
   }, [infors]);
@@ -316,7 +297,7 @@ export default function UserManagement() {
                       aria-label="update"
                       size="large"
                       onClick={() => {
-                        handleOpen(infor.taiKhoan);
+                        handleOpen(infor.id);
                       }}
                     >
                       <EditIcon fontSize="inherit" color="primary" />
@@ -368,38 +349,26 @@ export default function UserManagement() {
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
+        aria-labelledby="modal-modal-ftitle"
         aria-describedby="modal-modal-description"
       >
-        {isLoadingInfoUser ? (
-          <Backdrop
-            sx={{
-              color: "#fff",
-              zIndex: (theme) => theme.zIndex.drawer + 1,
-            }}
-            open={openBackdrop}
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop> // Hiển thị trạng thái tải
-        ) : (
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: 1000,
-              height: 400,
-              bgcolor: "background.paper",
-              border: "1px solid #fff",
-              boxShadow: 24,
-              p: 4,
-            }}
-          >
-            {/* Hiển thị form hoặc nội dung modal */}
-            {/* <UserModal infoUser={infoUser} onClose={handleClose} /> */}
-          </Box>
-        )}
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "70%",
+            height: "60%",
+            bgcolor: "background.paper",
+            border: "1px solid #fff",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          {/* Hiển thị form hoặc nội dung modal */}
+          <UpdateUser onClose={handleClose} />
+        </Box>
       </Modal>
 
       {/* Modal add user */}

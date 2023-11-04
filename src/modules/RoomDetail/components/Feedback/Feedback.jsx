@@ -62,14 +62,21 @@ export default function Feedback({ roomId, onGetFeedbacks }) {
     if (feedbacks.length > 0) {
       onGetFeedbacks(feedbacks);
     }
-  }, [feedbacks]);
+  }, [feedbacks, onGetFeedbacks]);
+
   return (
     <div className={styled.feedback}>
       <Grid container>
         {feedbacks.map((feedback, index) => (
           <Grid key={index} item md={6} sx={{ marginBottom: "50px" }}>
             <div className={styled.feedbackItem}>
-              <img style={{borderRadius:'10px'}} width={50} height={50} src={feedback.avatar || "/img/avatar.jpeg"} alt="" />
+              <img
+                style={{ borderRadius: "10px" }}
+                width={50}
+                height={50}
+                src={feedback.avatar || "/img/avatar.jpeg"}
+                alt=""
+              />
               <div className={styled.feedbackDetail}>
                 <Typography
                   sx={{
@@ -95,12 +102,12 @@ export default function Feedback({ roomId, onGetFeedbacks }) {
           </Grid>
         ))}
       </Grid>
-        <Button
-          sx={{ fontWeight: "500", fontSize: "16px", marginBottom: "50px" }}
-          variant="outlined"
-        >
-          Hiển thị tất cả đánh giá
-        </Button>
+      <Button
+        sx={{ fontWeight: "500", fontSize: "16px", marginBottom: "50px" }}
+        variant="outlined"
+      >
+        Hiển thị tất cả đánh giá
+      </Button>
 
       {/* Kiểm tra User  */}
       {user && (
@@ -114,7 +121,13 @@ export default function Feedback({ roomId, onGetFeedbacks }) {
           autoComplete="off"
         >
           <div className={styled.addComment}>
-            <img style={{borderRadius:'10px'}} width={50} height={50} src={user.avatar || "/img/avatar.jpeg"} alt="" />
+            <img
+              style={{ borderRadius: "10px" }}
+              width={50}
+              height={50}
+              src={user.avatar || "/img/avatar.jpeg"}
+              alt=""
+            />
             <TextField
               id="comment"
               label="Bình luận"

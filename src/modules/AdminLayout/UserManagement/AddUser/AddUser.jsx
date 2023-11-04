@@ -25,7 +25,7 @@ export default function AddUser({ onClose }) {
   const queryClient = useQueryClient();
 
   const addUserSchema = object({
-    matKhau: string()
+    password: string()
       .required("Mật khẩu không được để trống")
       .matches(
         /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/,
@@ -61,7 +61,7 @@ export default function AddUser({ onClose }) {
     control,
   } = useForm({
     defaultValues: {
-      matKhau: "",
+      password: "",
       email: "",
       phone: "",
       role: "",
@@ -77,7 +77,7 @@ export default function AddUser({ onClose }) {
     // Gọi API đăng ký
     handleAddUser(values);
     reset({
-      matKhau: "",
+      password: "",
       email: "",
       phone: "",
       role: "",
@@ -119,9 +119,9 @@ export default function AddUser({ onClose }) {
               label="Mật khẩu"
               variant="outlined"
               fullWidth
-              error={!!errors.matKhau}
-              helperText={errors.matKhau?.message}
-              {...register("matKhau")}
+              error={!!errors.password}
+              helperText={errors.password?.message}
+              {...register("password")}
             />
           </Grid>
           <Grid item xs={6}>
