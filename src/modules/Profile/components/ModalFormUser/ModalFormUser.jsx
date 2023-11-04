@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ModalContent, ModalSuccess } from "../../../../Components/Modal";
 import {
   Box,
   Grid,
-  IconButton,
-  InputAdornment,
   TextField,
   Typography,
 } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { ButtonCustom } from "../../../../Components/Button";
 import { Link } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -25,9 +22,7 @@ const signupShema = object({
   birthday: string().required("Ngày sinh không được để trống"),
 });
 
-export default function ModalFormUser({ userId, user,currentUser,onCloseFormUser }) {
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  console.log(user);
+export default function ModalFormUser({ userId, user,onCloseFormUser }) {
   const queryClient = useQueryClient()
   const {
     register,
@@ -52,6 +47,7 @@ export default function ModalFormUser({ userId, user,currentUser,onCloseFormUser
     mutationFn: (payload) => updateUser(userId, payload),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey:['user']})
+      onCloseFormUser(false)
     },
   });
   const onSubmit = (values) => {
@@ -74,13 +70,6 @@ export default function ModalFormUser({ userId, user,currentUser,onCloseFormUser
       setValue("email", user.email);
       setValue("name", user.name);
       setValue("phone", user.phone);
-      localStorage.setItem(
-        "currentUser",
-        JSON.stringify({
-          ...currentUser,
-          user: { ...currentUser.user, name: user.name },
-        })
-      );
     }
   }, [user]);
 
@@ -115,6 +104,7 @@ export default function ModalFormUser({ userId, user,currentUser,onCloseFormUser
                   {...register("email")}
                   error={!!errors.email}
                   helperText={errors.email && errors.email.message}
+                  disabled
                 />
               </Grid>
 
@@ -128,7 +118,6 @@ export default function ModalFormUser({ userId, user,currentUser,onCloseFormUser
                   error={!!errors.phone}
                   helperText={errors.phone && errors.phone.message}
                 />
-                {/* {error && <Typography color="red">{error}</Typography>} */}
               </Grid>
 
               <Grid item xs={12}>
@@ -138,16 +127,17 @@ export default function ModalFormUser({ userId, user,currentUser,onCloseFormUser
                   variant="outlined"
                   fullWidth
                   {...register("birthday")}
-                  // error={!!errors.birthday}
-                  // helperText={errors.birthday && errors.birthday.message}
+                  error={!!errors.birthday}
+                  helperText={errors.birthday && errors.birthday.message}
                 />
               </Grid>
+              {error && <Typography sx={{textAlign:'center',width:'100%',marginTop:'10px'}} color="red">{error}</Typography>}
             </Grid>
             <ButtonCustom
               type="submit"
               fullWidth
               variant="contained"
-              // disabled={isLoading}
+              disabled={isLoading}
             >
               Cập Nhật
             </ButtonCustom>
