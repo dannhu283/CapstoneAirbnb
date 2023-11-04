@@ -38,3 +38,12 @@ export async function bookingRoom(payload) {
     throw error.response.data.content;
   }
 }
+
+export async function getHistoryRoom(userId) {
+  try {
+    const response = await fetcher.get(`/dat-phong/lay-theo-nguoi-dung/${userId}`);
+    return response.data.content;
+  } catch (error) {
+    throw error.response.data.content;
+  }
+}

@@ -16,7 +16,8 @@ export const ModalSuccess = styled.div`
 export const ModalContent = styled.div`
   background-color: #fff;
   width: 400px;
-  height: 280px;
+  /* height: 280px; */
+  padding: 30px;
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   text-align: center;

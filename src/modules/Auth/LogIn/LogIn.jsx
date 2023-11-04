@@ -64,7 +64,6 @@ export default function Login() {
   const onSubmit = (values) => {
     handleSignin(values);
   };
-
   //currentUser khác null có nghĩ là user đã đăng nhập=> điều hướng về Home
   if (currentUser) {
     const redirectTo = searchParams.get("redirectTo");
