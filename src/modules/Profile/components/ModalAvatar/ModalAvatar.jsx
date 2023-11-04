@@ -19,7 +19,7 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-export default function ModalAvatar({ onClose, user, currentUser }) {
+export default function ModalAvatar({ onClose, user }) {
   const queryClient = useQueryClient();
   const fileInputRef = useRef(null);
   const [imgPreview, setImgPreview] = useState(user.avatar);
@@ -40,17 +40,7 @@ export default function ModalAvatar({ onClose, user, currentUser }) {
       onClose(false);
     },
   });
-
-  useEffect(() => {
-    if (!hinhAnh || !hinhAnh.files[0]) return;
-    localStorage.setItem(
-      "currentUser",
-      JSON.stringify({
-        ...currentUser,
-        user: { ...currentUser.user, avatar: user.avatar },
-      })
-    );
-  }, [user]);
+  
 
   const hinhAnh = fileInputRef.current;
   useEffect(() => {
@@ -76,7 +66,7 @@ export default function ModalAvatar({ onClose, user, currentUser }) {
             alignItems: "center",
           }}
         >
-          <img className={ModalAvatarStyled.avaImg} src={imgPreview} alt="" />
+          <img className={ModalAvatarStyled.avaImg} src={imgPreview || "/img/avatar.jpeg"} alt="" />
           <Button
             component="label"
             variant="contained"

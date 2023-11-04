@@ -20,10 +20,7 @@ export const logup = async (payload) => {
 
 export const getInfor = async (userId) => {
   try {
-<<<<<<< HEAD
     const response = await fetcher.get(`/users/${userId}`);
-=======
-    const response = await fetcher.get("/users");
     return response.data?.content;
   } catch (error) {
     throw error.response.data?.content;
@@ -46,7 +43,6 @@ export const removeUser = async (id) => {
         id: id || undefined,
       },
     });
->>>>>>> master
     return response.data?.content;
   } catch (error) {
     throw error.response.data?.content;

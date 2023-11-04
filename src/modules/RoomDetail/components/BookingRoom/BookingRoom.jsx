@@ -53,12 +53,8 @@ export default function BookingRoom({
       queriClient.invalidateQueries({ queryKey: ["isBooked"] });
     },
   });
-<<<<<<< HEAD
-  
-=======
 
-  console.log(selectionRange);
->>>>>>> master
+
   useEffect(() => {
     document.addEventListener("click", clickOutSide, true);
     document.addEventListener("keydown", escKey, true);
