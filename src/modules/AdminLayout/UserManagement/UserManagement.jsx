@@ -34,7 +34,7 @@ import Loading from "../../../Components/Loading";
 import AddUser from "./AddUser";
 import UpdateUser from "./UpdateUser/UpdateUser";
 import { removeUser } from "../../../APIs/userApi";
-import { ModalContent } from "../../../Components/Modal";
+import { ModalContent, ModalWidth } from "../../../Components/Modal";
 import { ButtonCustom, ButtonMain } from "../../../Components/Button";
 
 function TablePaginationActions(props) {
@@ -112,7 +112,6 @@ export default function UserManagement() {
   const [open, setOpen] = useState(false);
   const [openAddUser, setOpenAddUser] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const [userName, setUserName] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -128,7 +127,7 @@ export default function UserManagement() {
   const { mutate: handleDeleteUser } = useMutation({
     mutationFn: (id) => removeUser(id),
     onSuccess: () => {
-      handleClick();
+      setOpenStack(true);
       queryClient.invalidateQueries({ queryKey: ["infors"] });
     },
   });
@@ -146,36 +145,9 @@ export default function UserManagement() {
     setPage(0);
   };
 
-  const handleOpen = (userId) => {
-    setUserName(userId);
-    setOpen(true);
-    console.log(userId);
-  };
-
-  const handleClose = () => {
-    setUserName("");
-    setOpen(false);
-  };
-
-  const handleOpenAddUser = () => {
-    setOpenAddUser(true);
-  };
-
-  const handleCloseAddUser = () => {
-    setOpenAddUser(false);
-  };
-
-  const handleCloseDelete = () => {
-    setOpenDelete(false);
-  };
-
   const handleDeleteAndReload = () => {
     handleDeleteUser(selectedUser);
     setOpenDelete(false);
-  };
-
-  const handleClick = () => {
-    setOpenStack(true);
   };
 
   const handleCloseStack = (event, reason) => {
@@ -194,16 +166,11 @@ export default function UserManagement() {
     setFilteredUsers(filteredData);
   };
 
-  const handleSearch = () => {
-    filterUsers();
-  };
-
   // Attach an event handler to update searchQuery when the input value changes
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
-  // Sự kiện xử lý khi nhấn phím "Enter" trong trường đầu vào tìm kiếm
   const handleEnterKeyDown = (event) => {
     if (event.key === "Enter") {
       filterUsers();
@@ -241,18 +208,27 @@ export default function UserManagement() {
             onChange={handleSearchInputChange} // Handle input change
             onKeyDown={handleEnterKeyDown}
           />
-          <Button variant="contained" color="info" onClick={handleSearch}>
+          <Button
+            variant="contained"
+            color="info"
+            onClick={() => {
+              filterUsers();
+            }}
+          >
             <SearchIcon />
           </Button>
         </Box>
         <Button
           variant="contained"
           color="secondary"
-          onClick={handleOpenAddUser}
+          onClick={() => {
+            setOpenAddUser(true);
+          }}
         >
           Thêm người dùng
         </Button>
       </Box>
+
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 500 }} aria-label="infor pagination table">
           <TableHead>
@@ -297,7 +273,8 @@ export default function UserManagement() {
                       aria-label="update"
                       size="large"
                       onClick={() => {
-                        handleOpen(infor.id);
+                        setOpen(true);
+                        setSelectedUser(infor.id);
                       }}
                     >
                       <EditIcon fontSize="inherit" color="primary" />
@@ -348,58 +325,41 @@ export default function UserManagement() {
       {/* Modal update user */}
       <Modal
         open={open}
-        onClose={handleClose}
         aria-labelledby="modal-modal-ftitle"
         aria-describedby="modal-modal-description"
       >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "70%",
-            height: "60%",
-            bgcolor: "background.paper",
-            border: "1px solid #fff",
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
+        <ModalWidth>
           {/* Hiển thị form hoặc nội dung modal */}
-          <UpdateUser onClose={handleClose} />
-        </Box>
+          <UpdateUser
+            onClose={() => {
+              setOpen(false);
+            }}
+            userId={selectedUser}
+          />
+        </ModalWidth>
       </Modal>
 
       {/* Modal add user */}
       <Modal
         open={openAddUser}
-        onClose={handleCloseAddUser}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "70%",
-            height: "60%",
-            bgcolor: "background.paper",
-            border: "1px solid #fff",
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          <AddUser onClose={handleCloseAddUser} />
-        </Box>
+        <ModalWidth>
+          <AddUser
+            onClose={() => {
+              setOpenAddUser(false);
+            }}
+          />
+        </ModalWidth>
       </Modal>
 
       {/* Modal hiển thị thông báo xác nhận xóa */}
       <Modal
         open={openDelete}
-        onClose={handleCloseDelete}
+        onClose={() => {
+          setOpenDelete(false);
+        }}
         sx={{
           position: "fixed",
           top: "0",

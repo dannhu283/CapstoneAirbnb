@@ -27,13 +27,14 @@ export default function Profile() {
     queryFn: () => getInfor(userId),
     enabled: !!userId,
   });
+
   useEffect(() => {
     if (isOpen) return;
     localStorage.setItem(
       "currentUser",
       JSON.stringify({
         ...currentUser,
-        user: {...user},
+        user: { ...user },
       })
     );
   }, [user]);
