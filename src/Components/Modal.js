@@ -22,3 +22,15 @@ export const ModalContent = styled.div`
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   text-align: center;
 `;
+
+export const ModalWidth = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 50%;
+  background-color: white;
+  border: none solid #fff;
+  padding: 30px;
+`;

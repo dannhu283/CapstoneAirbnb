@@ -13,7 +13,7 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
 import { useState } from "react";
-import { ButtonMain } from "../../../../Components/Button";
+import { ButtonCustom, ButtonMain } from "../../../../Components/Button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addUser } from "../../../../APIs/userApi";
 import { ModalContent, ModalSuccess } from "../../../../Components/Modal";
@@ -186,10 +186,11 @@ export default function AddUser({ onClose }) {
             </FormControl>
           </Grid>
         </Grid>
-        <Box display={"flex"} justifyContent={"right"}>
+        <Box sx={{ margin: "2% 0 0 80%" }}>
           <ButtonMain variant="contained" m="2% 0 0 0" type="submit">
             Thêm người dùng
           </ButtonMain>
+          <ButtonCustom onClick={onClose}>Đóng</ButtonCustom>
         </Box>
       </Box>
       {showSuccessModal && (
