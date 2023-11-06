@@ -310,17 +310,17 @@ export default function DrawerAdmin() {
                 {open && <ChevronRightIcon />}
                 <Link to="" className={AdminStyle.link}>
                   {open ? (
-                    <ListItemText primary="Thêm Phòng" />
+                    <ListItemText primary="Danh sách phòng" />
                   ) : (
-                    <AddIcon fontSize="largef" />
+                    <TableViewIcon fontSize="large" />
                   )}
                 </Link>
               </ListItemButton>
               <ListItemButton sx={{ minHeight: 60 }}>
                 {open && <ChevronRightIcon />}
-                <Link to="" className={AdminStyle.link}>
+                <Link to="/admin/booking" className={AdminStyle.link}>
                   {open ? (
-                    <ListItemText primary="Danh sách phòng" />
+                    <ListItemText primary="Đặt phòng" />
                   ) : (
                     <TableViewIcon fontSize="large" />
                   )}
