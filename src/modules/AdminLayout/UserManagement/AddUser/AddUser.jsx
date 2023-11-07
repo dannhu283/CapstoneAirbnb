@@ -186,8 +186,14 @@ export default function AddUser({ onClose }) {
             </FormControl>
           </Grid>
         </Grid>
-        <Box sx={{ margin: "2% 0 0 80%" }}>
-          <ButtonMain variant="contained" m="2% 0 0 0" type="submit">
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+        >
+          <ButtonMain variant="contained" type="submit">
             Thêm người dùng
           </ButtonMain>
           <ButtonCustom onClick={onClose}>Đóng</ButtonCustom>

@@ -1,11 +1,6 @@
 import React from "react";
-import {
-  Box,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
+import { Box, Grid, TextField, Typography } from "@mui/material";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
 import { useState } from "react";
@@ -20,19 +15,16 @@ export default function AddUser({ onClose }) {
   const queryClient = useQueryClient();
 
   const addUserSchema = object({
-    tenViTri: string()
-      .required("Vị trí không được để trống"),
-      tinhThanh: string()
-      .required("Tỉnh thành không được để trống"),
-      
-      quocGia: string().required("Quốc gia không được để trống"),
-      hinhAnh: string()
-      .required("Hình ảnh không được để trống")
+    tenViTri: string().required("Vị trí không được để trống"),
+    tinhThanh: string().required("Tỉnh thành không được để trống"),
+
+    quocGia: string().required("Quốc gia không được để trống"),
+    hinhAnh: string().required("Hình ảnh không được để trống"),
   });
 
   const { mutate: handleAddLocation } = useMutation({
     mutationFn: (payload) => {
-      return addLocation(payload)
+      return addLocation(payload);
     },
     onSuccess: () => {
       queryClient.invalidateQueries("location");
@@ -44,7 +36,6 @@ export default function AddUser({ onClose }) {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     defaultValues: {
       tenViTri: "",
@@ -55,8 +46,6 @@ export default function AddUser({ onClose }) {
     resolver: yupResolver(addUserSchema),
     mode: "onTouched",
   });
-
-
 
   const handleCloseSuccess = () => {
     setShowSuccessModal(false);
@@ -115,10 +104,8 @@ export default function AddUser({ onClose }) {
               {...register("hinhAnh")}
             />
           </Grid>
-
-
         </Grid>
-        <Box sx={{ display:'flex',alignItems:'center'}}>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
           <ButtonMain variant="contained" type="submit">
             Thêm vị trí
           </ButtonMain>

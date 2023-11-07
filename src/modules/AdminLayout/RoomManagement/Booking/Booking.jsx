@@ -35,6 +35,8 @@ import Loading from "../../../../Components/Loading";
 import { removeBooked } from "../../../../APIs/roomApi";
 import { ModalContent, ModalWidth } from "../../../../Components/Modal";
 import { ButtonCustom, ButtonMain } from "../../../../Components/Button";
+import AddBooking from "./AddBooking/AddBooking";
+import UpdateBooking from "./UpdateBooking";
 import dayjs from "dayjs";
 
 function TablePaginationActions(props) {
@@ -223,7 +225,7 @@ export default function Booking() {
             setOpenAddUser(true);
           }}
         >
-          Đặt Phòng
+          Thêm Đặt Phòng
         </Button>
       </Box>
 
@@ -339,12 +341,12 @@ export default function Booking() {
       >
         <ModalWidth>
           {/* Hiển thị form hoặc nội dung modal */}
-          {/* <UpdateUser
+          <UpdateBooking
             onClose={() => {
               setOpen(false);
             }}
             userId={selectedBooked}
-          /> */}
+          />
         </ModalWidth>
       </Modal>
 
@@ -355,11 +357,11 @@ export default function Booking() {
         aria-describedby="modal-modal-description"
       >
         <ModalWidth>
-          {/* <AddUser
+          <AddBooking
             onClose={() => {
               setOpenAddUser(false);
             }}
-          /> */}
+          />
         </ModalWidth>
       </Modal>
 
