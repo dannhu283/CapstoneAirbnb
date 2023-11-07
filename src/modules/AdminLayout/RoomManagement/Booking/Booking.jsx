@@ -132,7 +132,6 @@ export default function Booking() {
     },
   });
 
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - listBooked.length) : 0;
 
@@ -158,15 +157,14 @@ export default function Booking() {
     setOpenStack(false);
   };
 
-  // Function to filter users based on search query
   const filterUsers = () => {
-    const filteredData = listBooked.filter((room) =>
+    let filteredData = listBooked.filter((room) =>
       room.maPhong.toString().includes(searchQuery.toString())
     );
+
     setFilteredUsers(filteredData);
   };
 
-  // Attach an event handler to update searchQuery when the input value changes
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
@@ -179,7 +177,7 @@ export default function Booking() {
 
   useEffect(() => {
     if (listBooked) {
-      setFilteredUsers(listBooked); // Ban đầu, filteredUsers bằng danh sách customers
+      setFilteredUsers(listBooked);
     }
   }, [listBooked]);
 
@@ -205,7 +203,7 @@ export default function Booking() {
             id="fullWidth"
             color="secondary"
             value={searchQuery}
-            onChange={handleSearchInputChange} // Handle input change
+            onChange={handleSearchInputChange}
             onKeyDown={handleEnterKeyDown}
           />
           <Button
