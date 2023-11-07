@@ -12,6 +12,7 @@ import ProtectedRoute from "./routers/ProtectedRoute";
 import Profile from "./modules/Profile";
 import AdminLayout from "./modules/AdminLayout/AdminLayout";
 import UserManagement from "./modules/AdminLayout/UserManagement/UserManagement";
+import LocationManagement from "./modules/AdminLayout/LocationManagement";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           {/* Admin */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route path="usermanagement" element={<UserManagement />} />
+            <Route path="locationmanagement" element={<LocationManagement />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />
