@@ -5,7 +5,6 @@ import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-import AddIcon from "@mui/icons-material/Add";
 import TableViewIcon from "@mui/icons-material/TableView";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
@@ -248,21 +247,10 @@ export default function DrawerAdmin() {
           </ListItem>
           <Collapse in={menuData.LocationMenuOpen}>
             <List>
-              {/* add Location */}
-              <ListItemButton sx={{ minHeight: 60 }}>
-                {open && <ChevronRightIcon />}
-                <Link to="" className={AdminStyle.link}>
-                  {open ? (
-                    <ListItemText primary="Thêm địa điểm" />
-                  ) : (
-                    <AddIcon fontSize="largef" />
-                  )}
-                </Link>
-              </ListItemButton>
               {/* managementLocation */}
               <ListItemButton sx={{ minHeight: 60 }}>
                 {open && <ChevronRightIcon />}
-                <Link to="" className={AdminStyle.link}>
+                <Link to="locationmanagement" className={AdminStyle.link}>
                   {open ? (
                     <ListItemText primary="Danh sách vị trí" />
                   ) : (

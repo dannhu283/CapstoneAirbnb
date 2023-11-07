@@ -20,7 +20,6 @@ import {
 } from "@mui/material";
 import { StyledTableCell, StyledTableRow } from "./index";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getListInfor } from "../../../APIs/userApi";
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
@@ -34,7 +33,7 @@ import Loading from "../../../Components/Loading";
 // import UpdateUser from "./UpdateUser/UpdateUser";
 import { ModalContent, ModalWidth } from "../../../Components/Modal";
 import { ButtonCustom, ButtonMain } from "../../../Components/Button";
-import { getLocation, getLocationByPageSize, removeLocation } from "../../../APIs/locationApi";
+import { getLocation, removeLocation } from "../../../APIs/locationApi";
 import AddLocation from "./AddLocation";
 import UpdateLocation from "./UpdateLocation";
 
@@ -247,10 +246,10 @@ export default function LocationManagement() {
                 Quốc gia
               </StyledTableCell>
               <StyledTableCell component="th" scope="row">
-              Tỉnh Thành
+                Tỉnh Thành
               </StyledTableCell>
               <StyledTableCell component="th" scope="row">
-              Thao tác
+                Thao tác
               </StyledTableCell>
             </StyledTableRow>
           </TableHead>
@@ -265,7 +264,9 @@ export default function LocationManagement() {
               <StyledTableRow key={location.id}>
                 <StyledTableCell>{location.id}</StyledTableCell>
                 <StyledTableCell>{location.tenViTri}</StyledTableCell>
-                <StyledTableCell><img src={location.hinhAnh} width={50} height={50} alt="" /></StyledTableCell>
+                <StyledTableCell>
+                  <img src={location.hinhAnh} width={50} height={50} alt="" />
+                </StyledTableCell>
                 <StyledTableCell>{location.quocGia}</StyledTableCell>
                 <StyledTableCell>{location.tinhThanh}</StyledTableCell>
                 <StyledTableCell>
@@ -345,7 +346,6 @@ export default function LocationManagement() {
         open={openAddLocation}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        
       >
         <ModalWidth>
           <AddLocation
@@ -422,4 +422,3 @@ export default function LocationManagement() {
     </>
   );
 }
-

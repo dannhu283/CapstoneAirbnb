@@ -58,3 +58,21 @@ export const removeBooked = async (id) => {
     throw error.response.data?.content;
   }
 };
+
+export const updateBooking = async (userId, payload) => {
+  try {
+    const response = await fetcher.put(`/dat-phong/${userId}`, payload);
+    return response.data?.content;
+  } catch (error) {
+    throw error.response.data?.content;
+  }
+};
+
+export const getBooked = async (userId) => {
+  try {
+    const response = await fetcher.get(`/dat-phong/${userId}`);
+    return response.data?.content;
+  } catch (error) {
+    throw error.response.data?.content;
+  }
+};

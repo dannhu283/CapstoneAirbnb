@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Box, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { getLocation, getLocations } from "../../../../APIs/locationApi";
+import { getLocation } from "../../../../APIs/locationApi";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
