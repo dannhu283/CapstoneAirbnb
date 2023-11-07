@@ -226,7 +226,7 @@ export default function LocationManagement() {
             setOpenAddLocation(true);
           }}
         >
-          Thêm người dùng
+          Thêm vị trí
         </Button>
       </Box>
 
