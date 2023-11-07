@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Box, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { getLocations } from "../../../../APIs/locationApi";
+import { getLocation, getLocations } from "../../../../APIs/locationApi";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -64,7 +64,7 @@ function SamplePrevArrow(props) {
 export default function Locations() {
   const { data: locations = [] } = useQuery({
     queryKey: ["locations"],
-    queryFn: getLocations,
+    queryFn: getLocation,
   });
 
   const settings = {
@@ -88,7 +88,7 @@ export default function Locations() {
             Khám phá những điểm đến gần đây
           </Typography>
           <Slider {...settings}>
-            {locations.data?.map((location) => (
+            {locations.map((location) => (
               <div className={locationStyle("locationItem")} key={location.id}>
                 <Link to={`/list-room/${location.id}`}>
                   <img src={location.hinhAnh} alt="" />

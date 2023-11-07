@@ -12,6 +12,7 @@ import ProtectedRoute from "./routers/ProtectedRoute";
 import Profile from "./modules/Profile";
 import AdminLayout from "./modules/AdminLayout/AdminLayout";
 import UserManagement from "./modules/AdminLayout/UserManagement/UserManagement";
+import LocationManagement from "./modules/AdminLayout/LocationManagement";
 import Booking from "./modules/AdminLayout/RoomManagement/Booking/Booking";
 import ListRoomAdmin from "./modules/AdminLayout/RoomManagement/ListRoomAdmin";
 
@@ -36,6 +37,7 @@ function App() {
           {/* Admin */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route path="usermanagement" element={<UserManagement />} />
+            <Route path="locationmanagement" element={<LocationManagement />} />
             <Route path="booking" element={<Booking />} />
             <Route path="listroom-Admin" element={<ListRoomAdmin />} />
           </Route>
@@ -46,5 +48,4 @@ function App() {
     </UserProvider>
   );
 }
-
 export default App;
