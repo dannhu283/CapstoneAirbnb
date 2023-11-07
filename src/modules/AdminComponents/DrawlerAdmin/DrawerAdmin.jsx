@@ -308,7 +308,7 @@ export default function DrawerAdmin() {
             <List>
               <ListItemButton sx={{ minHeight: 60 }}>
                 {open && <ChevronRightIcon />}
-                <Link to="" className={AdminStyle.link}>
+                <Link to="/admin/listroom-Admin" className={AdminStyle.link}>
                   {open ? (
                     <ListItemText primary="Danh sách phòng" />
                   ) : (
