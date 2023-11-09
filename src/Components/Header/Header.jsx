@@ -41,11 +41,10 @@ export default function Header() {
     "Đăng nhập",
     "Trợ giúp",
     "Cho thuê nhà",
-    "Tổ chức trải nghiệm",
     "Đăng xuất",
   ];
 
-  if (isUser) {
+  if (currentUser) {
     settings = settings.filter(
       (item) => !item.includes("Đăng kí") && !item.includes("Đăng nhập")
     );
@@ -255,7 +254,13 @@ export default function Header() {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {isUser && (
+                  {!isUser && (
+                    <MenuItem onClick={() => navigate("/admin")}>
+                      <Typography fontWeight="bold">Admin</Typography>
+                    </MenuItem>
+                  )}
+
+                  {currentUser && (
                     <Box>
                       <MenuItem onClick={handleClickInfor}>
                         <Typography fontWeight="bold">Trang cá nhân</Typography>

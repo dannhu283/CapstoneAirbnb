@@ -8,6 +8,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getInfor, updateUser } from "../../../../APIs/userApi";
 import Loading from "../../../../Components/Loading";
 import { ModalSuccess, ModalContent } from "../../../../Components/Modal";
+import dayjs from "dayjs";
 
 const updateShema = object({
   name: string().required("Tên không được để trống"),
@@ -144,11 +145,16 @@ export default function UpdateUser({ userId, onClose }) {
 
           <Grid item xs={6}>
             <TextField
-              type="date"
+              type="datel"
               color="success"
               variant="outlined"
               fullWidth
-              {...register("birthday")}
+              InputLabelProps={{ shrink: true }}
+              {...register("birthday", {
+                setValueAs: (values) => {
+                  return dayjs(values).format("DD-MM-YYYY");
+                },
+              })}
               error={!!errors.birthday}
               helperText={errors.birthday && errors.birthday.message}
             />

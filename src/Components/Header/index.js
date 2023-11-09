@@ -15,6 +15,9 @@ export const DivHeader = styled.div`
   padding: 10px;
   border-radius: 50px;
   cursor: pointer;
+  @media (max-width: 978px) {
+    margin-bottom: 10px;
+  }
 `;
 
 export const DivIcon = styled.div`
