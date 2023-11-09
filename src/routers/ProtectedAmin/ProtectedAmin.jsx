@@ -11,7 +11,7 @@ export default function ProtectedAmin({ children }) {
     return <Navigate to={url} replace />;
   }
 
-  if (currentUser?.role !== "admin") {
+  if (currentUser?.user?.role?.toLowerCase() !== "admin") {
     return <Navigate to="/Access" replace />;
   }
   return children || <Outlet />;

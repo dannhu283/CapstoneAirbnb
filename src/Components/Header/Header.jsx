@@ -34,7 +34,7 @@ import { useUserContext } from "../../context/UserContext/UserContext";
 export default function Header() {
   const { currentUser, handleSignout } = useUserContext();
 
-  const isUser = currentUser?.user?.role.toLowerCase() === "user";
+  const isAmin = currentUser?.user?.role?.toLowerCase() === "admin";
 
   let settings = [
     "Đăng kí",
@@ -254,7 +254,7 @@ export default function Header() {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {!isUser && (
+                  {isAmin && (
                     <MenuItem onClick={() => navigate("/admin")}>
                       <Typography fontWeight="bold">Admin</Typography>
                     </MenuItem>

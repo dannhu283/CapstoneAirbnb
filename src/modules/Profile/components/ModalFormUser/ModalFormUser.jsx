@@ -2,12 +2,11 @@ import React, { useEffect } from "react";
 import { ModalContent, ModalSuccess } from "../../../../Components/Modal";
 import { Box, Grid, TextField, Typography } from "@mui/material";
 import { ButtonCustom } from "../../../../Components/Button";
-import { Link } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { object, string } from "yup";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getInfor, updateUser } from "../../../../APIs/userApi";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateUser } from "../../../../APIs/userApi";
 
 const signupShema = object({
   name: string().required("Tên không được để trống"),
