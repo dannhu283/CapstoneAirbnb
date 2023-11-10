@@ -20,8 +20,10 @@ import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import MovieFilterIcon from "@mui/icons-material/MovieFilter";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Collapse from "@mui/material/Collapse";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AdminStyle from "../../AdminLayout/AdminStyle.module.css";
+import HomeIcon from "@mui/icons-material/Home";
+import Tooltip from "@mui/material/Tooltip";
 
 const drawerWidth = 240;
 
@@ -91,6 +93,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function DrawerAdmin() {
+  const navigate = useNavigate();
   const theme = useTheme();
   const [open, setOpen] = useState(true);
   const [menuData, setMenuData] = useState({
@@ -134,7 +137,7 @@ export default function DrawerAdmin() {
         elevation={5}
         sx={{ backgroundColor: "#130f40" }}
       >
-        <Toolbar>
+        <Toolbar sx={{ display: "flex" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -148,6 +151,15 @@ export default function DrawerAdmin() {
           <Typography variant="h5" noWrap component="div" color={"white"}>
             QUẢN TRỊ HỆ THỐNG
           </Typography>
+
+          <Tooltip title="Trang chủ" placement="bottom">
+            <IconButton
+              sx={{ color: "white", marginLeft: "75%" }}
+              onClick={() => navigate("/")}
+            >
+              <HomeIcon sx={{ fontSize: "40px" }} />
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
