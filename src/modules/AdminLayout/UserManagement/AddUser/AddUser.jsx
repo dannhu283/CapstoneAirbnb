@@ -38,11 +38,8 @@ export default function AddUser({ onClose }) {
     phone: string()
       .required("Số điện thoại không được để trống")
       .matches(/^(0[1-9][0-9]{8})$/, "Số điện thoại không đúng"),
-    birthday: string().matches(
-      /\d{2}\/\d{2}\/\d{4}/,
-      "Vui lòng chọn ngày sinh"
-    ),
-    role: string().required("Vui lòng loại người dùng"),
+    birthday: string().required("Ngày sinh không được để trống"),
+    role: string().required("Vui lòng chọn loại người dùng"),
   });
 
   const { mutate: handleAddUser } = useMutation({
@@ -155,7 +152,7 @@ export default function AddUser({ onClose }) {
                 }}
                 {...register("birthday", {
                   setValueAs: (values) => {
-                    return dayjs(values).format("DD/MM/YYYY");
+                    return dayjs(values).format("DD-MM-YYYY");
                   },
                 })}
                 error={!!errors.birthday}

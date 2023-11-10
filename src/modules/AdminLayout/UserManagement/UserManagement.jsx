@@ -117,6 +117,7 @@ export default function UserManagement() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [openStack, setOpenStack] = useState(false);
+  const [openErro, setOpenErro] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -130,6 +131,9 @@ export default function UserManagement() {
     onSuccess: () => {
       setOpenStack(true);
       queryClient.invalidateQueries({ queryKey: ["infors"] });
+    },
+    onError: (err) => {
+      setOpenErro(true);
     },
   });
 
@@ -402,6 +406,52 @@ export default function UserManagement() {
             }}
           >
             Hủy
+          </ButtonCustom>
+        </ModalContent>
+      </Modal>
+
+      {/* Modal báo lỗi */}
+
+      <Modal
+        open={openErro}
+        onClose={() => {
+          setOpenErro(false);
+        }}
+        sx={{
+          position: "fixed",
+          top: "0",
+          left: "0",
+          width: "100%",
+          height: "100%",
+          backgroundColor: " rgba(0, 0, 0, 0.6)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          opacity: 1000000,
+        }}
+      >
+        <ModalContent>
+          <img
+            style={{ width: "120px", marginTop: "10px" }}
+            src="/img/animation_error_small.gif"
+            alt="errro"
+          />
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: "bold",
+              marginBottom: "20px",
+              color: "#f43f5e",
+            }}
+          >
+            Không sửa được giá trị mặc định
+          </Typography>
+          <ButtonCustom
+            onClick={() => {
+              setOpenErro(false);
+            }}
+          >
+            Đóng
           </ButtonCustom>
         </ModalContent>
       </Modal>
