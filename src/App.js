@@ -27,10 +27,10 @@ function App() {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="list-room/:placeId" element={<ListRoom />} />
-            <Route path="roomDetail/:roomId" element={<RoomDetail />} />
 
             <Route element={<ProtectedRoute />}>
               <Route path="profile/:userId" element={<Profile />} />
+              <Route path="roomDetail/:roomId" element={<RoomDetail />} />
             </Route>
           </Route>
           <Route path="/log-in" element={<LogIn />} />

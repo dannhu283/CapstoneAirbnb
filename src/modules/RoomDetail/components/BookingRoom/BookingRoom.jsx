@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "./BookingRoom.module.scss";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Modal, Stack, Snackbar, Alert } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
@@ -11,6 +11,8 @@ import dayjs from "dayjs";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { bookingRoom, getRoomisBooked } from "../../../../APIs/roomApi";
 import { useUserContext } from "../../../../context/UserContext/UserContext";
+import { ModalContent } from "../../../../Components/Modal";
+import { ButtonCustom, ButtonMain } from "../../../../Components/Button";
 
 export default function BookingRoom({
   roomId,
@@ -36,6 +38,8 @@ export default function BookingRoom({
   const queriClient = useQueryClient();
   const [count, setCount] = useState(1);
   const [countDays, setCountDays] = useState(0);
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openStack, setOpenStack] = useState(false);
 
   const { mutate: onSuccess } = useMutation({
     mutationFn: (value) => {
@@ -50,7 +54,9 @@ export default function BookingRoom({
       return bookingRoom(valueForm);
     },
     onSuccess: () => {
+      setOpenStack(true);
       queriClient.invalidateQueries({ queryKey: ["isBooked"] });
+      setOpenSuccess(false);
     },
   });
 
@@ -94,6 +100,14 @@ export default function BookingRoom({
       return date >= start && date <= end;
     });
   }
+
+  const handleCloseStack = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenStack(false);
+  };
 
   return (
     <div className={styled.bookingRoom}>
@@ -179,7 +193,9 @@ export default function BookingRoom({
           </div>
           <div className={styled.btnBookingItem}>
             <button
-              onClick={onSuccess}
+              onClick={() => {
+                setOpenSuccess(true);
+              }}
               type="submit"
               className={styled.btnBooking}
             >
@@ -204,6 +220,67 @@ export default function BookingRoom({
           </div>
         </div>
       </div>
+      <Modal
+        open={openSuccess}
+        onClose={() => {
+          setOpenSuccess(false);
+        }}
+        sx={{
+          position: "fixed",
+          top: "0",
+          left: "0",
+          width: "100%",
+          height: "100%",
+          backgroundColor: " rgba(0, 0, 0, 0.6)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          opacity: "999",
+        }}
+      >
+        <ModalContent>
+          <img
+            style={{ width: "120px", marginTop: "10px" }}
+            src="/img/animation_lnov06bj_small.gif"
+            alt="confirm"
+          />
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: "bold",
+              marginBottom: "40px",
+              color: " #f43f5e",
+            }}
+          >
+            Bạn có chắc chắn đặt phòng ?
+          </Typography>
+
+          <ButtonMain onClick={onSuccess}>Xác nhận</ButtonMain>
+          <ButtonCustom
+            onClick={() => {
+              setOpenSuccess(false);
+            }}
+          >
+            Hủy
+          </ButtonCustom>
+        </ModalContent>
+      </Modal>
+      <Stack spacing={2} sx={{ width: "100%" }}>
+        <Snackbar
+          open={openStack}
+          autoHideDuration={3000}
+          onClose={handleCloseStack}
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        >
+          <Alert
+            onClose={handleCloseStack}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            Đặt phòng thành công!
+          </Alert>
+        </Snackbar>
+      </Stack>
     </div>
   );
 }
