@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { object, string } from "yup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateUser } from "../../../../APIs/userApi";
+import dayjs from "dayjs";
 
 const signupShema = object({
   name: string().required("Tên không được để trống"),
@@ -66,7 +67,7 @@ export default function ModalFormUser({ userId, user, onCloseFormUser }) {
       setValue("name", user.name);
       setValue("phone", user.phone);
     }
-  }, [user]);
+  }, [user, setValue]);
 
   return (
     <ModalSuccess>
@@ -126,7 +127,12 @@ export default function ModalFormUser({ userId, user, onCloseFormUser }) {
                   color="success"
                   variant="outlined"
                   fullWidth
-                  {...register("birthday")}
+                  InputLabelProps={{ shrink: true }}
+                  {...register("birthday", {
+                    setValueAs: (values) => {
+                      return dayjs(values).format("YYYY-MM-DD");
+                    },
+                  })}
                   error={!!errors.birthday}
                   helperText={errors.birthday && errors.birthday.message}
                 />
