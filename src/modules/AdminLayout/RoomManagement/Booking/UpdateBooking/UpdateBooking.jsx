@@ -160,7 +160,7 @@ export default function UpdateBooking({ userId, onClose }) {
               InputLabelProps={{ shrink: true }}
               {...register("ngayDen", {
                 setValueAs: (values) => {
-                  return dayjs(values).format("YYYY-MM-DD ");
+                  return dayjs(values).format("DD-MM-YYYY");
                 },
               })}
               error={!!errors.ngayDen}
@@ -177,7 +177,7 @@ export default function UpdateBooking({ userId, onClose }) {
               InputLabelProps={{ shrink: true }}
               {...register("ngayDi", {
                 setValueAs: (values) => {
-                  return dayjs(values).format("YYYY-MM-DD");
+                  return dayjs(values).format("DD-MM-YYYY");
                 },
               })}
               error={!!errors.ngayDi}

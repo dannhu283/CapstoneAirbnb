@@ -42,6 +42,7 @@ export default function UpdateUser({ userId, onClose }) {
       name: "",
       phone: "",
       birthday: "",
+      role: "",
     },
     resolver: yupResolver(updateShema),
     mode: "onTouched",
@@ -63,7 +64,7 @@ export default function UpdateUser({ userId, onClose }) {
       birthday: values.birthday,
       id: userId,
       gender: true,
-      role: "USER",
+      role: values.role,
     };
     //call API sign up
     handleUpdateUser(formValues);
@@ -76,6 +77,7 @@ export default function UpdateUser({ userId, onClose }) {
       setValue("email", user.email);
       setValue("name", user.name);
       setValue("phone", user.phone);
+      setValue("role", user.role);
     }
   }, [user, setValue]);
 
