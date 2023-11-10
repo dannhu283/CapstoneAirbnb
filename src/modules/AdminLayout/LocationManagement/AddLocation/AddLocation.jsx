@@ -9,7 +9,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ModalContent, ModalSuccess } from "../../../../Components/Modal";
 import { addLocation } from "../../../../APIs/locationApi";
 
-export default function AddUser({ onClose }) {
+export default function AddLocation({ onClose }) {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const queryClient = useQueryClient();
@@ -27,7 +27,7 @@ export default function AddUser({ onClose }) {
       return addLocation(payload);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries("location");
+      queryClient.invalidateQueries(['location']);
       setShowSuccessModal(true);
     },
   });
