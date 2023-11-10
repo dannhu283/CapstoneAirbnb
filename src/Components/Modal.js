@@ -32,5 +32,5 @@ export const ModalWidth = styled.div`
   /* height: 50%; */
   background-color: white;
   border: none solid #fff;
-  padding: 30px;
+  padding: 10px;
 `;
