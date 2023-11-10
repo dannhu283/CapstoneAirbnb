@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  TextField,
+  Typography,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import { ButtonCustom, ButtonMain } from "../../../../Components/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { object, string } from "yup";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getInfor, updateUser } from "../../../../APIs/userApi";
@@ -18,6 +27,7 @@ const updateShema = object({
   phone: string().required("Vui lòng nhập số điện thoại"),
   birthday: string().required("Ngày sinh không được để trống"),
   id: string(),
+  role: string().required("Vui lòng loại người dùng"),
 });
 
 export default function UpdateUser({ userId, onClose }) {
@@ -33,6 +43,7 @@ export default function UpdateUser({ userId, onClose }) {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
     setValue,
   } = useForm({
@@ -42,6 +53,7 @@ export default function UpdateUser({ userId, onClose }) {
       name: "",
       phone: "",
       birthday: "",
+      role: "",
     },
     resolver: yupResolver(updateShema),
     mode: "onTouched",
@@ -63,7 +75,7 @@ export default function UpdateUser({ userId, onClose }) {
       birthday: values.birthday,
       id: userId,
       gender: true,
-      role: "USER",
+      role: values.role,
     };
     //call API sign up
     handleUpdateUser(formValues);
@@ -76,6 +88,7 @@ export default function UpdateUser({ userId, onClose }) {
       setValue("email", user.email);
       setValue("name", user.name);
       setValue("phone", user.phone);
+      setValue("role", user.role);
     }
   }, [user, setValue]);
 
@@ -158,6 +171,28 @@ export default function UpdateUser({ userId, onClose }) {
               error={!!errors.birthday}
               helperText={errors.birthday && errors.birthday.message}
             />
+          </Grid>
+
+          <Grid item xs={6}>
+            <FormControl fullWidth error={!!errors.role}>
+              <InputLabel id="role">Mã người dùng</InputLabel>
+              <Controller
+                name="role"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    labelId="role"
+                    id="role"
+                    label="Loại người dùng"
+                    {...field}
+                  >
+                    <MenuItem value={""}>Chọn loại người dùng</MenuItem>
+                    <MenuItem value={"USER"}>Khách hàng</MenuItem>
+                    <MenuItem value={"ADMIN"}>Quản trị viên</MenuItem>
+                  </Select>
+                )}
+              />
+            </FormControl>
           </Grid>
           {error && (
             <Typography
