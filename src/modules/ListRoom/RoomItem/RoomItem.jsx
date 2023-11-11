@@ -77,7 +77,14 @@ export default function RoomItem({ listRoom }) {
   return (
     <>
       <Grid container spacing={2}>
-        <Typography>Có {listRoom?.length} chỗ ở phù hợp</Typography>
+        <Typography
+          sx={{
+            color: "#f43f5e",
+            fontWeight: "bold",
+          }}
+        >
+          Có {listRoom?.length} chỗ ở phù hợp
+        </Typography>
         <Grid
           item
           xs={12}
@@ -87,7 +94,14 @@ export default function RoomItem({ listRoom }) {
           }}
         >
           <Typography
-            sx={{ fontSize: "30px", fontWeight: "bold", marginRight: "10px" }}
+            sx={{
+              fontSize: {
+                md: "30px",
+                xs: "25px",
+              },
+              fontWeight: "bold",
+              marginRight: "10px",
+            }}
           >
             Chỗ ở tại khu vực bản đồ đã chọn
           </Typography>
