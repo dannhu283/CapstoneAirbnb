@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ModalContent, ModalSuccess } from "../../../../Components/Modal";
 import { Box, Grid, TextField, Typography } from "@mui/material";
 import { ButtonCustom } from "../../../../Components/Button";
@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { object, string } from "yup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateUser } from "../../../../APIs/userApi";
+import { ButtonMain } from "../../../../Components/Button";
 import dayjs from "dayjs";
 
 const signupShema = object({
@@ -19,6 +20,7 @@ const signupShema = object({
 });
 
 export default function ModalFormUser({ userId, user, onCloseFormUser }) {
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const queryClient = useQueryClient();
   const {
     register,
@@ -27,6 +29,7 @@ export default function ModalFormUser({ userId, user, onCloseFormUser }) {
     setValue,
   } = useForm({
     defaultValues: {
+      id: userId,
       email: "",
       name: "",
       phone: "",
@@ -43,18 +46,16 @@ export default function ModalFormUser({ userId, user, onCloseFormUser }) {
     mutationFn: (payload) => updateUser(userId, payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
-      onCloseFormUser(false);
+      setShowSuccessModal(true);
     },
   });
   const onSubmit = (values) => {
     const formValues = {
+      id: userId,
       email: values.email,
       name: values.name,
       phone: values.phone,
       birthday: values.birthday,
-      id: userId,
-      gender: true,
-      role: "USER",
     };
     //call API sign up
     handleUpdateUser(formValues);
@@ -68,6 +69,11 @@ export default function ModalFormUser({ userId, user, onCloseFormUser }) {
       setValue("phone", user.phone);
     }
   }, [user, setValue]);
+
+  const handleCloseSuccess = () => {
+    setShowSuccessModal(false);
+    onCloseFormUser(false);
+  };
 
   return (
     <ModalSuccess>
@@ -84,6 +90,16 @@ export default function ModalFormUser({ userId, user, onCloseFormUser }) {
             style={{ width: "100%", marginTop: "20px" }}
           >
             <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  label="Mã người dùng"
+                  color="success"
+                  variant="outlined"
+                  fullWidth
+                  disabled
+                  value={userId}
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   label="Họ Tên"
@@ -105,7 +121,6 @@ export default function ModalFormUser({ userId, user, onCloseFormUser }) {
                   {...register("email")}
                   error={!!errors.email}
                   helperText={errors.email && errors.email.message}
-                  disabled
                 />
               </Grid>
 
@@ -147,6 +162,7 @@ export default function ModalFormUser({ userId, user, onCloseFormUser }) {
               )}
             </Grid>
             <ButtonCustom
+              onClick={() => setShowSuccessModal(true)}
               type="submit"
               fullWidth
               variant="contained"
@@ -155,6 +171,31 @@ export default function ModalFormUser({ userId, user, onCloseFormUser }) {
               Cập Nhật
             </ButtonCustom>
           </form>
+          {showSuccessModal && (
+            <ModalSuccess>
+              <ModalContent>
+                <img
+                  style={{ width: "120px", marginTop: "10px" }}
+                  src="/img/animation_lnfs5c14_small.gif"
+                  alt="confirm"
+                />
+                <Typography
+                  variant="h6"
+                  sx={{ fontWeight: "bold", marginBottom: "40px" }}
+                >
+                  Cập Nhật Thông Tin Thành Công
+                </Typography>
+
+                <ButtonMain
+                  variant="contained"
+                  color="primary"
+                  onClick={handleCloseSuccess}
+                >
+                  Đồng ý
+                </ButtonMain>
+              </ModalContent>
+            </ModalSuccess>
+          )}
         </ModalContent>
       </Box>
     </ModalSuccess>
