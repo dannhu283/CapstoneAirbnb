@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid, TextField, Typography, Modal } from "@mui/material";
+import { Box, Grid, TextField, Typography } from "@mui/material";
 import { ButtonCustom, ButtonMain } from "../../../../Components/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -8,6 +8,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Loading from "../../../../Components/Loading";
 import { ModalSuccess, ModalContent } from "../../../../Components/Modal";
 import { getLocationById, updateLocation } from "../../../../APIs/locationApi";
+import ModalErro from "../../../../Components/Modal/ModalErro";
 
 const updateShema = object({
   hinhAnh: string().required("Hình ảnh không được để trống"),
@@ -201,49 +202,7 @@ export default function UpdateLocation({ locationId, onClose }) {
 
       {/* Modal báo lỗi */}
 
-      <Modal
-        open={openErro}
-        onClose={() => {
-          setOpenErro(false);
-        }}
-        sx={{
-          position: "fixed",
-          top: "0",
-          left: "0",
-          width: "100%",
-          height: "100%",
-          backgroundColor: " rgba(0, 0, 0, 0.6)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          opacity: 1000000,
-        }}
-      >
-        <ModalContent>
-          <img
-            style={{ width: "120px", marginTop: "10px" }}
-            src="/img/animation_error_small.gif"
-            alt="errro"
-          />
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: "bold",
-              marginBottom: "20px",
-              color: "#f43f5e",
-            }}
-          >
-            Không sửa được giá trị mặc định
-          </Typography>
-          <ButtonCustom
-            onClick={() => {
-              setOpenErro(false);
-            }}
-          >
-            Đóng
-          </ButtonCustom>
-        </ModalContent>
-      </Modal>
+      <ModalErro openErro={openErro} setOpenErro={setOpenErro} />
     </Box>
   );
 }

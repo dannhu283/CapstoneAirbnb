@@ -106,7 +106,10 @@ export default function RoomItem({ listRoom }) {
             Chỗ ở tại khu vực bản đồ đã chọn
           </Typography>
           <Button
-            sx={{ color: "black", backgroundColor: "#dfe4ea" }}
+            sx={{
+              color: "black",
+              backgroundColor: "#dfe4ea",
+            }}
             onClick={handleOpenUserMenu}
           >
             <FilterAltIcon sx={{ color: "#f43f5e" }} />
@@ -146,13 +149,13 @@ export default function RoomItem({ listRoom }) {
         >
           <Box sx={{ width: "20%" }}>
             <ButtonFill onClick={() => setSortPrice(!sortPrice)}>
-              Giá tiền {sortPrice ? "▲" : "▼"}
+              Giá {sortPrice ? "▲" : "▼"}
             </ButtonFill>
           </Box>
 
           <Box
             sx={{
-              width: "30%",
+              width: "35%",
             }}
           >
             <FormControl fullWidth>
@@ -172,7 +175,7 @@ export default function RoomItem({ listRoom }) {
             </FormControl>
           </Box>
 
-          <Box sx={{ width: "30%" }}>
+          <Box sx={{ width: "35%" }}>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Giường</InputLabel>
               <Select

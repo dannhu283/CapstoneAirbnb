@@ -8,7 +8,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  Modal,
 } from "@mui/material";
 import { ButtonCustom, ButtonMain } from "../../../../Components/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -19,6 +18,7 @@ import { getInfor, updateUser } from "../../../../APIs/userApi";
 import Loading from "../../../../Components/Loading";
 import { ModalSuccess, ModalContent } from "../../../../Components/Modal";
 import dayjs from "dayjs";
+import ModalErro from "../../../../Components/Modal/ModalErro";
 
 const updateShema = object({
   name: string().required("Tên không được để trống"),
@@ -61,7 +61,7 @@ export default function UpdateUser({ userId, onClose }) {
     mode: "onTouched",
   });
 
-  const { mutate: handleUpdateUser, error } = useMutation({
+  const { mutate: handleUpdateUser } = useMutation({
     mutationFn: (payload) => updateUser(userId, payload),
     onSuccess: () => {
       queryClient.invalidateQueries(["user", userId]);
@@ -199,14 +199,6 @@ export default function UpdateUser({ userId, onClose }) {
               />
             </FormControl>
           </Grid>
-          {error && (
-            <Typography
-              sx={{ textAlign: "center", width: "100%", marginTop: "10px" }}
-              color="red"
-            >
-              {error}
-            </Typography>
-          )}
         </Grid>
         <ButtonCustom
           type="submit"
@@ -246,49 +238,7 @@ export default function UpdateUser({ userId, onClose }) {
       )}
       {/* Modal báo lỗi */}
 
-      <Modal
-        open={openErro}
-        onClose={() => {
-          setOpenErro(false);
-        }}
-        sx={{
-          position: "fixed",
-          top: "0",
-          left: "0",
-          width: "100%",
-          height: "100%",
-          backgroundColor: " rgba(0, 0, 0, 0.6)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          opacity: 1000000,
-        }}
-      >
-        <ModalContent>
-          <img
-            style={{ width: "120px", marginTop: "10px" }}
-            src="/img/animation_error_small.gif"
-            alt="errro"
-          />
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: "bold",
-              marginBottom: "20px",
-              color: "#f43f5e",
-            }}
-          >
-            Không sửa được giá trị mặc định
-          </Typography>
-          <ButtonCustom
-            onClick={() => {
-              setOpenErro(false);
-            }}
-          >
-            Đóng
-          </ButtonCustom>
-        </ModalContent>
-      </Modal>
+      <ModalErro openErro={openErro} setOpenErro={setOpenErro} />
     </Box>
   );
 }

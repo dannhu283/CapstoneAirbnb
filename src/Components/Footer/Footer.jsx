@@ -17,7 +17,7 @@ export default function Footer() {
       <Divfooter>
         <Container>
           <Grid container spacing={2}>
-            <Grid item xs={6} md={3}>
+            <Grid item xs={12} md={3}>
               <TitleF>Giới thiệu</TitleF>
               <List>
                 <ListItem>
@@ -53,7 +53,7 @@ export default function Footer() {
               </List>
             </Grid>
 
-            <Grid item xs={6} md={3}>
+            <Grid item xs={12} md={3}>
               <TitleF>CỘNG ĐỒNG </TitleF>
               <List>
                 <ListItem>
@@ -81,7 +81,7 @@ export default function Footer() {
               </List>
             </Grid>
 
-            <Grid item xs={6} md={3}>
+            <Grid item xs={12} md={3}>
               <TitleF>ĐÓN TIẾP KHÁCH</TitleF>
               <List>
                 <ListItem>
@@ -105,7 +105,7 @@ export default function Footer() {
               </List>
             </Grid>
 
-            <Grid item xs={6} md={3}>
+            <Grid item xs={12} md={3}>
               <TitleF>HỖ TRỢ</TitleF>
               <List>
                 <ListItem>
@@ -140,7 +140,7 @@ export default function Footer() {
                 justifyContent: "center",
                 margin: " 2%",
                 fontSize: {
-                  xs: "13px",
+                  xs: "0",
                   md: "16px",
                 },
               }}

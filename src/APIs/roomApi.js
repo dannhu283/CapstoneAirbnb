@@ -95,9 +95,9 @@ export const deleteRoom = async (roomId) => {
   }
 };
 
-export const updateRoom = async (roomId,payload) => {
+export const updateRoom = async (roomId, payload) => {
   try {
-    const response = await fetcher.put(`/phong-thue/${roomId}`,payload);
+    const response = await fetcher.put(`/phong-thue/${roomId}`, payload);
     return response.data?.content;
   } catch (error) {
     throw error.response.data?.content;
@@ -105,19 +105,23 @@ export const updateRoom = async (roomId,payload) => {
 };
 export const addRoom = async (payload) => {
   try {
-    const response = await fetcher.post(`/phong-thue`,payload);
+    const response = await fetcher.post(`/phong-thue`, payload);
     return response.data?.content;
   } catch (error) {
     throw error.response.data?.content;
   }
 };
-export const upLoadImgRoom = async (roomId,payload) => {
+export const upLoadImgRoom = async (roomId, payload) => {
   try {
-    const response = await fetcher.post(`/phong-thue/upload-hinh-phong`,payload,{
-      params:{
-        maPhong:roomId
+    const response = await fetcher.post(
+      `/phong-thue/upload-hinh-phong`,
+      payload,
+      {
+        params: {
+          maPhong: roomId,
+        },
       }
-    });
+    );
     return response.data?.content;
   } catch (error) {
     throw error.response.data?.content;

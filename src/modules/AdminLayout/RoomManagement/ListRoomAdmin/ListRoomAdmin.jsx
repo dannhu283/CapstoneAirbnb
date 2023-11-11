@@ -37,7 +37,7 @@ import { ModalContent, ModalWidth } from "../../../../Components/Modal";
 import AddRooms from "./AddRooms";
 import UpdateRoom from "./UpdateRoom";
 import ModalUpLoadImg from "./ModalUpLoadImg";
-
+import ModalErro from "../../../../Components/Modal/ModalErro";
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -118,7 +118,7 @@ export default function ListRoomsManagement() {
   const [filteredRooms, setFilteredRooms] = useState([]);
   const [openStack, setOpenStack] = useState(false);
   const [openErro, setOpenErro] = useState(false);
-  const [modalUpImg,setModalImg] = useState(false)
+  const [modalUpImg, setModalImg] = useState(false);
   const queryClient = useQueryClient();
 
   const { data: roomList = [], isLoading } = useQuery({
@@ -245,7 +245,7 @@ export default function ListRoomsManagement() {
                 Tên
               </StyledTableCell>
               <StyledTableCell component="th" scope="row">
-                Hình Ảnh
+                Đổi Hình Ảnh
               </StyledTableCell>
               <StyledTableCell component="th" scope="row">
                 Khách
@@ -271,8 +271,21 @@ export default function ListRoomsManagement() {
                 <StyledTableCell>{room.id}</StyledTableCell>
                 <StyledTableCell>{room.tenPhong}</StyledTableCell>
                 <StyledTableCell>
-                {modalUpImg && <ModalUpLoadImg roomId={room.id} onClose={setModalImg} roomImg={room.hinhAnh}/>}
-                  < img style={{cursor:'pointer'}} onClick={()=>setModalImg(true)} src={room.hinhAnh} width={50} height={50} alt="" />
+                  {modalUpImg && (
+                    <ModalUpLoadImg
+                      roomId={room.id}
+                      onClose={setModalImg}
+                      roomImg={room.hinhAnh}
+                    />
+                  )}
+                  <img
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setModalImg(true)}
+                    src={room.hinhAnh}
+                    width={50}
+                    height={50}
+                    alt=""
+                  />
                 </StyledTableCell>
                 <StyledTableCell>{room.khach}</StyledTableCell>
                 <StyledTableCell>{room.phongNgu}</StyledTableCell>
@@ -304,7 +317,6 @@ export default function ListRoomsManagement() {
                       </IconButton>
                     </Tooltip>
                   </Box>
-                
                 </StyledTableCell>
               </StyledTableRow>
             ))}
@@ -336,7 +348,7 @@ export default function ListRoomsManagement() {
           </TableFooter>
         </Table>
       </TableContainer>
-      
+
       {/* Modal update user */}
       <Modal
         open={open}
@@ -418,49 +430,7 @@ export default function ListRoomsManagement() {
 
       {/* Modal báo lỗi */}
 
-      <Modal
-        open={openErro}
-        onClose={() => {
-          setOpenErro(false);
-        }}
-        sx={{
-          position: "fixed",
-          top: "0",
-          left: "0",
-          width: "100%",
-          height: "100%",
-          backgroundColor: " rgba(0, 0, 0, 0.6)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          opacity: 1000000,
-        }}
-      >
-        <ModalContent>
-          <img
-            style={{ width: "120px", marginTop: "10px" }}
-            src="/img/animation_error_small.gif"
-            alt="errro"
-          />
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: "bold",
-              marginBottom: "20px",
-              color: "#f43f5e",
-            }}
-          >
-            Không được xóa giá trị mặc định
-          </Typography>
-          <ButtonCustom
-            onClick={() => {
-              setOpenErro(false);
-            }}
-          >
-            Đóng
-          </ButtonCustom>
-        </ModalContent>
-      </Modal>
+      <ModalErro openErro={openErro} setOpenErro={setOpenErro} />
 
       <Stack spacing={2} sx={{ width: "100%" }}>
         <Snackbar

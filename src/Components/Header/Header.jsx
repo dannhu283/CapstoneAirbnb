@@ -54,9 +54,10 @@ export default function Header() {
 
   const [open, setOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [state, setState] = useState();
   const [showBoxSearch, setShowBoxSearch] = useState(true);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [openAlert, setOpenAlert] = useState(false);
 
   const navigate = useNavigate();
 
@@ -84,20 +85,12 @@ export default function Header() {
     setOpen(true);
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
-  };
-
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
   const handleOnChange = (e) => {
-    setState(e.target.value);
+    setSelectedLocation(e.target.value);
   };
 
   const handleCloseUserMenu = (setting) => {
@@ -115,13 +108,29 @@ export default function Header() {
     setShowBoxSearch(!showBoxSearch);
   };
 
-  if (isLoading) return <Loading />;
-
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    if (state !== "") {
-      navigate(`/list-room/${state}`);
+    if (selectedLocation !== "") {
+      navigate(`/list-room/${selectedLocation}`);
+    } else {
+      setOpenAlert(true);
     }
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const handleCloseAlert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenAlert(false);
   };
 
   const handleConfirmLogout = () => {
@@ -139,6 +148,8 @@ export default function Header() {
     navigate(`/profile/${currentUser.user.id}`);
   };
 
+  if (isLoading) return <Loading />;
+
   return (
     <AppBar
       position="fixed"
@@ -149,7 +160,7 @@ export default function Header() {
       <Container maxWidth="xl">
         <Toolbar>
           <Grid container spacing={2}>
-            <Grid item xs={3}>
+            <Grid item md={3} xs={2}>
               <Box
                 sx={{
                   display: "flex",
@@ -180,7 +191,7 @@ export default function Header() {
               </Box>
             </Grid>
 
-            <Grid item xs={5} mt={3}>
+            <Grid item md={5} xs={8} mt={3}>
               <Box
                 sx={{
                   flexGrow: 1,
@@ -201,7 +212,7 @@ export default function Header() {
               </Box>
             </Grid>
 
-            <Grid item xs={4} mt={3}>
+            <Grid item md={4} xs={2} mt={3}>
               <Box sx={{ display: "flex" }}>
                 <Box sx={{ display: { xs: "none", md: "flex" } }}>
                   <Typography
@@ -295,7 +306,7 @@ export default function Header() {
                     <Select
                       label="Địa điểm"
                       onChange={handleOnChange}
-                      defaultValue=""
+                      value={selectedLocation}
                     >
                       <MenuItem value="">- Chọn thành phố -</MenuItem>
                       {listCityData?.map((city) => (
@@ -376,6 +387,23 @@ export default function Header() {
             sx={{ width: "100%" }}
           >
             Đăng xuất thành công!
+          </Alert>
+        </Snackbar>
+      </Stack>
+
+      <Stack spacing={2} sx={{ width: "100%" }}>
+        <Snackbar
+          open={openAlert}
+          autoHideDuration={6000}
+          onClose={handleCloseAlert}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        >
+          <Alert
+            severity="error"
+            onClose={handleCloseAlert}
+            sx={{ width: "100%" }}
+          >
+            Vui lòng chọn địa điểm muốn đến
           </Alert>
         </Snackbar>
       </Stack>

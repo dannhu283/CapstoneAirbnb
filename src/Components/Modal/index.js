@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+export { default } from "./ModalErro";
 
 export const ModalSuccess = styled.div`
   position: fixed;

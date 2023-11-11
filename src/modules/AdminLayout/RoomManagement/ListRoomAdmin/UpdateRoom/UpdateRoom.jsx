@@ -10,7 +10,6 @@ import {
   TextField,
   Typography,
   FormControlLabel,
-  Modal,
   FormControl,
   InputLabel,
   Select,
@@ -23,8 +22,7 @@ import { getRoomDetail, updateRoom } from "../../../../../APIs/roomApi";
 import { getLocation } from "../../../../../APIs/locationApi";
 import { ModalContent, ModalSuccess } from "../../../../../Components/Modal";
 import Loading from "../../../../../Components/Loading";
-import { ButtonCustom } from "../../../../../Components/Button";
-import ModalUpLoadImg from "../ModalUpLoadImg";
+import ModalErro from "../../../../../Components/Modal/ModalErro";
 
 //MUI switch
 const IOSSwitch = styled((props) => (
@@ -487,49 +485,7 @@ export default function UpdateRoom({ onClose, roomId }) {
 
       {/* Modal báo lỗi */}
 
-      <Modal
-        open={openErro}
-        onClose={() => {
-          setOpenErro(false);
-        }}
-        sx={{
-          position: "fixed",
-          top: "0",
-          left: "0",
-          width: "100%",
-          height: "100%",
-          backgroundColor: " rgba(0, 0, 0, 0.6)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          opacity: 1000000,
-        }}
-      >
-        <ModalContent>
-          <img
-            style={{ width: "120px", marginTop: "10px" }}
-            src="/img/animation_error_small.gif"
-            alt="errro"
-          />
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: "bold",
-              marginBottom: "20px",
-              color: "#f43f5e",
-            }}
-          >
-            Không sửa được giá trị mặc định
-          </Typography>
-          <ButtonCustom
-            onClick={() => {
-              setOpenErro(false);
-            }}
-          >
-            Đóng
-          </ButtonCustom>
-        </ModalContent>
-      </Modal>
+      <ModalErro openErro={openErro} setOpenErro={setOpenErro} />
     </Container>
   );
 }
