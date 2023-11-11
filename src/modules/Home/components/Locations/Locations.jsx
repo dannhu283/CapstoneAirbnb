@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Box, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { getLocation } from "../../../../APIs/locationApi";
@@ -13,16 +13,21 @@ import { CarouselContainer } from "./index";
 const locationStyle = cn.bind(styled);
 
 export default function Locations() {
+  const [dotsCount, setDotsCount] = useState(4);
+
   const { data: locations = [] } = useQuery({
     queryKey: ["locations"],
     queryFn: getLocation,
   });
 
+  const handleDotsCount = (count) => {
+    setDotsCount(count);
+  };
+
   const settings = {
     infinite: true,
     slidesToShow: 4,
     slidesToScroll: 1,
-    arrows: true,
     dots: true,
     autoplay: true,
     speed: 4000,
@@ -42,6 +47,12 @@ export default function Locations() {
           slidesToShow: 2,
         },
       },
+      {
+        breakpoint: 400,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
     ],
   };
   return (
@@ -55,7 +66,22 @@ export default function Locations() {
           >
             Khám phá những điểm đến gần đây
           </Typography>
-          <Slider {...settings}>
+          <Slider
+            {...settings}
+            appendDots={(dots) => (
+              <div>
+                {dots.slice(0, dotsCount)}
+                {dots.length > dotsCount && (
+                  <h2
+                    className={locationStyle("dots")}
+                    onClick={() => handleDotsCount(dots.length)}
+                  >
+                    ...
+                  </h2>
+                )}
+              </div>
+            )}
+          >
             {locations.map((location) => (
               <div className={locationStyle("locationItem")} key={location.id}>
                 <Link to={`/list-room/${location.id}`}>
