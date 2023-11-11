@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
-import dayjs from "dayjs";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
-// import { addMovie } from "../../../../APIs/movieAPI";
 import {
   Box,
   Container,
@@ -13,17 +11,19 @@ import {
   Typography,
   FormControlLabel,
   Modal,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import Switch from "@mui/material/Switch";
 import { ButtonMain } from "../../../../../Components/Button";
-import { useNavigate } from "react-router-dom";
-import { object, string } from "yup";
+import { object, string, number } from "yup";
 import { getRoomDetail, updateRoom } from "../../../../../APIs/roomApi";
+import { getLocation } from "../../../../../APIs/locationApi";
 import { ModalContent, ModalSuccess } from "../../../../../Components/Modal";
 import Loading from "../../../../../Components/Loading";
 import { ButtonCustom } from "../../../../../Components/Button";
-
-// import { ModalSuccess, ModalContent } from "../../../../Components/Modal";
 
 //MUI switch
 const IOSSwitch = styled((props) => (
@@ -80,7 +80,6 @@ const IOSSwitch = styled((props) => (
 export default function UpdateRoom({ onClose, roomId }) {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  const navigate = useNavigate();
   const [mayGiat, setmayGiat] = useState(false);
   const [banLa, setbanLa] = useState(false);
   const [tivi, settivi] = useState(false);
@@ -91,6 +90,19 @@ export default function UpdateRoom({ onClose, roomId }) {
   const [hoBoi, sethoBoi] = useState(false);
   const [banUi, setbanUi] = useState(false);
   const [openErro, setOpenErro] = useState(false);
+  const [selectedViTri, setSelectedViTri] = useState("");
+
+  const updateRoomShema = object({
+    tenPhong: string().required("Vui lòng nhập tên phòng"),
+    khach: number().typeError("Khách phải là một con số"),
+    phongNgu: number().typeError("Phòng ngủ phải là một con số"),
+    giuong: number().typeError("Giường phải là một con số"),
+    phongTam: number().typeError("Phòng tắm phải là một con số"),
+    giaTien: number().typeError("Giá tiền phải là một con số"),
+    maViTri: string().required("Vui lòng chọn vị trí"),
+    hinhAnh: string().required("Vui lòng điền link"),
+    moTa: string().required("Vui lòng thêm mô tả "),
+  });
 
   const queryClient = useQueryClient();
   const { data: room = [], isLoading } = useQuery({
@@ -98,6 +110,11 @@ export default function UpdateRoom({ onClose, roomId }) {
     queryFn: () => getRoomDetail(roomId),
     enabled: !!roomId,
   });
+  const { data: location = [], isLocaLoading } = useQuery({
+    queryKey: ["location"],
+    queryFn: getLocation,
+  });
+
   const {
     register,
     handleSubmit,
@@ -107,16 +124,16 @@ export default function UpdateRoom({ onClose, roomId }) {
   } = useForm({
     defaultValues: {
       tenPhong: "",
-      khach: 0,
-      phongNgu: 0,
-      giuong: 0,
-      phongTam: 0,
+      khach: "",
+      phongNgu: "",
+      giuong: "",
+      phongTam: "",
       moTa: "",
-      giaTien: 0,
-      maViTri: 0,
+      giaTien: "",
+      maViTri: "",
       hinhAnh: "",
     },
-    // resolver: yupResolver(addmovieShema),
+    resolver: yupResolver(updateRoomShema),
     mode: "onTouched",
   });
 
@@ -181,10 +198,16 @@ export default function UpdateRoom({ onClose, roomId }) {
       setValue("hinhAnh", room.hinhAnh);
     }
   }, [room, setValue]);
-  if (isLoading) return <Loading />;
+
+  const handleChangeViTri = (evt) => {
+    setSelectedViTri(evt.target.value);
+  };
+
+  if (isLoading || isLocaLoading) return <Loading />;
+
   return (
     <Container>
-      <Box mt={7} sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Box mt={2} sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="h4" gutterBottom>
           📜📜 Chỉnh Sửa Phòng
         </Typography>
@@ -198,9 +221,38 @@ export default function UpdateRoom({ onClose, roomId }) {
         </Typography>
       </Box>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={2}>
-          {/* ten */}
-          <Grid item xs={12} sm={12}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={4}>
+            <FormControl sx={{ minWidth: "100%" }} color="success">
+              <InputLabel>Chọn Vị Trí</InputLabel>
+              <Controller
+                control={control}
+                defaultValue=""
+                name="maViTri"
+                render={({ field }) => (
+                  <Select
+                    value={selectedViTri}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleChangeViTri(e);
+                    }}
+                    label="Chọn Vị Trí"
+                    {...field}
+                  >
+                    <MenuItem value=" ">
+                      <em>------</em>
+                    </MenuItem>
+                    {location.map((loca) => (
+                      <MenuItem key={loca.id} value={loca.id}>
+                        {loca.tenViTri}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={8}>
             <TextField
               fullWidth
               label="Tên phòng"
@@ -211,10 +263,8 @@ export default function UpdateRoom({ onClose, roomId }) {
               helperText={errors.tenPhong && errors.tenPhong.message}
             />
           </Grid>
-          {/* bidanh */}
           <Grid item xs={12} sm={4}>
             <TextField
-              type="number"
               fullWidth
               label="Khách"
               color="success"
@@ -224,12 +274,10 @@ export default function UpdateRoom({ onClose, roomId }) {
               helperText={errors.khach && errors.khach.message}
             />
           </Grid>
-          {/* trailer */}
           <Grid item xs={12} sm={4}>
             <TextField
-              type="number"
               fullWidth
-              label="phongNgu"
+              label="Phòng Ngủ"
               variant="outlined"
               color="success"
               {...register("phongNgu")}
@@ -237,12 +285,10 @@ export default function UpdateRoom({ onClose, roomId }) {
               helperText={errors.phongNgu && errors.phongNgu.message}
             />
           </Grid>
-          {/* ngaykhoichieu */}
           <Grid item xs={12} sm={4}>
             <TextField
               fullWidth
-              type="number"
-              label="giuong"
+              label="Giường"
               color="success"
               variant="outlined"
               // InputLabelProps={{ shrink: true }}
@@ -254,8 +300,7 @@ export default function UpdateRoom({ onClose, roomId }) {
           <Grid item xs={12} sm={4}>
             <TextField
               fullWidth
-              type="number"
-              label="phongTam"
+              label="Phòng Tắm"
               color="success"
               variant="outlined"
               // InputLabelProps={{ shrink: true }}
@@ -267,11 +312,9 @@ export default function UpdateRoom({ onClose, roomId }) {
           <Grid item xs={12} sm={4}>
             <TextField
               fullWidth
-              type="number"
-              label="giaTien"
+              label="Giá Tiền"
               color="success"
               variant="outlined"
-              // InputLabelProps={{ shrink: true }}
               {...register("giaTien")}
               error={!!errors.giaTien}
               helperText={errors.giaTien && errors.giaTien.message}
@@ -280,18 +323,15 @@ export default function UpdateRoom({ onClose, roomId }) {
           <Grid item xs={12} sm={4}>
             <TextField
               fullWidth
-              type="number"
-              label="maViTri"
-              color="success"
+              label="Hình Ảnh"
               variant="outlined"
-              // InputLabelProps={{ shrink: true }}
-              {...register("maViTri")}
-              error={!!errors.maViTri}
-              helperText={errors.maViTri && errors.maViTri.message}
+              color="success"
+              {...register("hinhAnh")}
+              error={!!errors.hinhAnh}
+              helperText={errors.hinhAnh && errors.hinhAnh.message}
             />
           </Grid>
-          {/* mota */}
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Mô tả"
@@ -300,18 +340,6 @@ export default function UpdateRoom({ onClose, roomId }) {
               {...register("moTa")}
               error={!!errors.moTa}
               helperText={errors.moTa && errors.moTa.message}
-            />
-          </Grid>
-          {/* hinhanh */}
-          <Grid item xs={6}>
-            <TextField
-              fullWidth
-              label="Hình Ảnh"
-              variant="outlined"
-              color="success"
-              {...register("hinhAnh")}
-              error={!!errors.hinhAnh}
-              helperText={errors.hinhAnh && errors.hinhAnh.message}
             />
           </Grid>
           <Grid item xs={2}>
@@ -425,7 +453,7 @@ export default function UpdateRoom({ onClose, roomId }) {
 
           <Grid item xs={12}>
             <ButtonMain variant="contained" color="primary" type="submit">
-              Cập nhật
+              Cập Nhật
             </ButtonMain>
           </Grid>
         </Grid>
