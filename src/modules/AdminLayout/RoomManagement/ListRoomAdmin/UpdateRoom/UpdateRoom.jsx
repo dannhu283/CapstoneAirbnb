@@ -24,6 +24,7 @@ import { getLocation } from "../../../../../APIs/locationApi";
 import { ModalContent, ModalSuccess } from "../../../../../Components/Modal";
 import Loading from "../../../../../Components/Loading";
 import { ButtonCustom } from "../../../../../Components/Button";
+import ModalUpLoadImg from "../ModalUpLoadImg";
 
 //MUI switch
 const IOSSwitch = styled((props) => (
