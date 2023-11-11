@@ -1,18 +1,29 @@
 import React from "react";
-import { Box, Grid, TextField, Typography, FormControl } from "@mui/material";
-import { useForm } from "react-hook-form";
+import {
+  Box,
+  Grid,
+  TextField,
+  Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
 import { useState } from "react";
 import { ButtonCustom, ButtonMain } from "../../../../../Components/Button";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { ModalContent, ModalSuccess } from "../../../../../Components/Modal";
-import { bookingRoom } from "../../../../../APIs/roomApi";
+import { bookingRoom, getRooms } from "../../../../../APIs/roomApi";
+
 import dayjs from "dayjs";
+import Loading from "../../../../../Components/Loading";
 
 export default function AddUser({ onClose }) {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-
+  const [selectedRoom, setSelectedRoom] = useState("");
   const queryClient = useQueryClient();
 
   const addBookingSchema = object({
@@ -29,6 +40,15 @@ export default function AddUser({ onClose }) {
       ),
   });
 
+  const { data: rooms = [], isLoading } = useQuery({
+    queryKey: ["location"],
+    queryFn: getRooms,
+  });
+
+  const handleChangeRoom = (evt) => {
+    setSelectedRoom(evt.target.value);
+  };
+
   const { mutate: handleAddBooking } = useMutation({
     mutationFn: (payload) => {
       return bookingRoom(payload);
@@ -42,6 +62,7 @@ export default function AddUser({ onClose }) {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -60,6 +81,8 @@ export default function AddUser({ onClose }) {
     onClose();
   };
 
+  if (isLoading) return <Loading />;
+
   return (
     <Box>
       <Typography variant="h5" gutterBottom>
@@ -73,17 +96,37 @@ export default function AddUser({ onClose }) {
         onSubmit={handleSubmit(handleAddBooking)}
       >
         <Grid container spacing={2}>
-          <Grid item xs={4}>
-            <TextField
-              label="Mã Phòng"
-              variant="outlined"
-              fullWidth
-              error={!!errors.maPhong}
-              helperText={errors.maPhong?.message}
-              {...register("maPhong")}
-            />
+          <Grid item xs={12}>
+            <FormControl sx={{ minWidth: "100%" }} color="success">
+              <InputLabel>Chọn Phòng</InputLabel>
+              <Controller
+                control={control}
+                defaultValue=""
+                name="maPhong"
+                render={({ field }) => (
+                  <Select
+                    value={selectedRoom}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleChangeRoom(e);
+                    }}
+                    label="Chọn Phòng"
+                    {...field}
+                  >
+                    <MenuItem value=" ">
+                      <em>------</em>
+                    </MenuItem>
+                    {rooms.map((loca) => (
+                      <MenuItem key={loca.id} value={loca.id}>
+                        {loca.tenPhong}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+            </FormControl>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <TextField
               label="Mã Người Dùng"
               fullWidth
@@ -92,7 +135,7 @@ export default function AddUser({ onClose }) {
               {...register("maNguoiDung")}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <TextField
               label="Số Lượng Khách"
               fullWidth

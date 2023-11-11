@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
-import dayjs from "dayjs";
 import { useForm, Controller } from "react-hook-form";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -18,8 +17,7 @@ import {
 } from "@mui/material";
 import Switch from "@mui/material/Switch";
 import { ButtonMain } from "../../../../../Components/Button";
-import { useNavigate } from "react-router-dom";
-import { object, string } from "yup";
+import { object, string, number } from "yup";
 import { addRoom } from "../../../../../APIs/roomApi";
 import { getLocation } from "../../../../../APIs/locationApi";
 import { ModalContent, ModalSuccess } from "../../../../../Components/Modal";
@@ -78,7 +76,6 @@ const IOSSwitch = styled((props) => (
 }));
 
 export default function AddRooms({ onClose }) {
-  const navigate = useNavigate();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [mayGiat, setmayGiat] = useState(false);
   const [banLa, setbanLa] = useState(false);
@@ -91,26 +88,37 @@ export default function AddRooms({ onClose }) {
   const [banUi, setbanUi] = useState(false);
   const [selectedViTri, setSelectedViTri] = useState("");
 
+  const addRoomShema = object({
+    tenPhong: string().required("Vui lòng nhập tên phòng"),
+    khach: number().typeError("Khách phải là một con số"),
+    phongNgu: number().typeError("Phòng ngủ phải là một con số"),
+    giuong: number().typeError("Giường phải là một con số"),
+    phongTam: number().typeError("Phòng tắm phải là một con số"),
+    giaTien: number().typeError("Giá tiền phải là một con số"),
+    maViTri: string().required("Vui lòng chọn vị trí"),
+    hinhAnh: string().required("Vui lòng điền link"),
+    moTa: string().required("Vui lòng thêm mô tả "),
+  });
+
   const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
-    watch,
     control,
     formState: { errors },
   } = useForm({
     defaultValues: {
       tenPhong: "",
-      khach: 0,
-      phongNgu: 0,
-      giuong: 0,
-      phongTam: 0,
+      khach: "",
+      phongNgu: "",
+      giuong: "",
+      phongTam: "",
       moTa: "",
-      giaTien: 0,
-      maViTri: 0,
+      giaTien: "",
+      maViTri: "",
       hinhAnh: "",
     },
-    // resolver: yupResolver(addmovieShema),
+    resolver: yupResolver(addRoomShema),
     mode: "onTouched",
   });
 
@@ -119,7 +127,7 @@ export default function AddRooms({ onClose }) {
     onClose();
   };
 
-  const { mutate: onSubmit, error } = useMutation({
+  const { mutate: onSubmit } = useMutation({
     mutationFn: (values) => {
       const formValues = {
         id: 0,
@@ -163,102 +171,22 @@ export default function AddRooms({ onClose }) {
 
   return (
     <Container>
-      <Box mt={7} sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Box mt={3} sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="h4" gutterBottom>
           📔📔Thêm Phòng
         </Typography>
         <Typography
           onClick={onClose}
           sx={{ color: "blue", cursor: "pointer" }}
-          variant="h4"
-          gutterBottom
+          variant="h5"
         >
           X
         </Typography>
       </Box>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={2}>
-          {/* ten */}
-          <Grid item xs={12} sm={12}>
-            <TextField
-              fullWidth
-              label="Tên phòng"
-              variant="outlined"
-              color="success"
-              {...register("tenPhong")}
-              error={!!errors.tenPhong}
-              helperText={errors.tenPhong && errors.tenPhong.message}
-            />
-          </Grid>
-          {/* bidanh */}
+        <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
-            <TextField
-              type="number"
-              fullWidth
-              label="Khách"
-              color="success"
-              {...register("khach")}
-              variant="outlined"
-              error={!!errors.khach}
-              helperText={errors.khach && errors.khach.message}
-            />
-          </Grid>
-          {/* trailer */}
-          <Grid item xs={12} sm={4}>
-            <TextField
-              type="number"
-              fullWidth
-              label="phongNgu"
-              variant="outlined"
-              color="success"
-              {...register("phongNgu")}
-              error={!!errors.phongNgu}
-              helperText={errors.phongNgu && errors.phongNgu.message}
-            />
-          </Grid>
-          {/* ngaykhoichieu */}
-          <Grid item xs={12} sm={4}>
-            <TextField
-              fullWidth
-              type="number"
-              label="giuong"
-              color="success"
-              variant="outlined"
-              // InputLabelProps={{ shrink: true }}
-              {...register("giuong")}
-              error={!!errors.giuong}
-              helperText={errors.giuong && errors.giuong.message}
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              fullWidth
-              type="number"
-              label="phongTam"
-              color="success"
-              variant="outlined"
-              // InputLabelProps={{ shrink: true }}
-              {...register("phongTam")}
-              error={!!errors.phongTam}
-              helperText={errors.phongTam && errors.phongTam.message}
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              fullWidth
-              type="number"
-              label="giaTien"
-              color="success"
-              variant="outlined"
-              // InputLabelProps={{ shrink: true }}
-              {...register("giaTien")}
-              error={!!errors.giaTien}
-              helperText={errors.giaTien && errors.giaTien.message}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={4}>
-            <FormControl sx={{ m: 1, minWidth: "80%" }} color="success">
+            <FormControl sx={{ minWidth: "100%" }} color="success">
               <InputLabel>Chọn Vị Trí</InputLabel>
               <Controller
                 control={control}
@@ -271,7 +199,6 @@ export default function AddRooms({ onClose }) {
                       field.onChange(e);
                       handleChangeViTri(e);
                     }}
-                    autoWidth
                     label="Chọn Vị Trí"
                     {...field}
                   >
@@ -288,21 +215,75 @@ export default function AddRooms({ onClose }) {
               />
             </FormControl>
           </Grid>
-          {/* mota */}
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={8}>
             <TextField
               fullWidth
-              label="Mô tả"
+              label="Tên phòng"
               variant="outlined"
               color="success"
-              {...register("moTa")}
-              multiline
-              error={!!errors.moTa}
-              helperText={errors.moTa && errors.moTa.message}
+              {...register("tenPhong")}
+              error={!!errors.tenPhong}
+              helperText={errors.tenPhong && errors.tenPhong.message}
             />
           </Grid>
-          {/* hinhanh */}
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              fullWidth
+              label="Khách"
+              color="success"
+              {...register("khach")}
+              variant="outlined"
+              error={!!errors.khach}
+              helperText={errors.khach && errors.khach.message}
+            />
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              fullWidth
+              label="Phòng Ngủ"
+              variant="outlined"
+              color="success"
+              {...register("phongNgu")}
+              error={!!errors.phongNgu}
+              helperText={errors.phongNgu && errors.phongNgu.message}
+            />
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              fullWidth
+              label="Giường"
+              color="success"
+              variant="outlined"
+              // InputLabelProps={{ shrink: true }}
+              {...register("giuong")}
+              error={!!errors.giuong}
+              helperText={errors.giuong && errors.giuong.message}
+            />
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              fullWidth
+              label="Phòng Tắm"
+              color="success"
+              variant="outlined"
+              // InputLabelProps={{ shrink: true }}
+              {...register("phongTam")}
+              error={!!errors.phongTam}
+              helperText={errors.phongTam && errors.phongTam.message}
+            />
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              fullWidth
+              label="Giá Tiền"
+              color="success"
+              variant="outlined"
+              {...register("giaTien")}
+              error={!!errors.giaTien}
+              helperText={errors.giaTien && errors.giaTien.message}
+            />
+          </Grid>
+          <Grid item xs={12} sm={4}>
             <TextField
               fullWidth
               label="Hình Ảnh"
@@ -312,6 +293,18 @@ export default function AddRooms({ onClose }) {
               multiline
               error={!!errors.hinhAnh}
               helperText={errors.hinhAnh && errors.hinhAnh.message}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Mô tả"
+              variant="outlined"
+              color="success"
+              {...register("moTa")}
+              multiline
+              error={!!errors.moTa}
+              helperText={errors.moTa && errors.moTa.message}
             />
           </Grid>
           <Grid item xs={2}>

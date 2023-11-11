@@ -183,7 +183,7 @@ export default function ListRoomsManagement() {
 
   useEffect(() => {
     if (roomList) {
-      setFilteredRooms(roomList); // Ban đầu, filteredRooms bằng danh sách customers
+      setFilteredRooms(roomList);
     }
   }, [roomList]);
 
@@ -252,12 +252,7 @@ export default function ListRoomsManagement() {
               <StyledTableCell component="th" scope="row">
                 Phòng
               </StyledTableCell>
-              <StyledTableCell component="th" scope="row">
-                Giường
-              </StyledTableCell>
-              <StyledTableCell component="th" scope="row">
-                Nhà tắm
-              </StyledTableCell>
+
               <StyledTableCell component="th" scope="row">
                 Thao tác
               </StyledTableCell>
@@ -279,8 +274,7 @@ export default function ListRoomsManagement() {
                 </StyledTableCell>
                 <StyledTableCell>{room.khach}</StyledTableCell>
                 <StyledTableCell>{room.phongNgu}</StyledTableCell>
-                <StyledTableCell>{room.giuong}</StyledTableCell>
-                <StyledTableCell>{room.phongTam}</StyledTableCell>
+
                 <StyledTableCell>
                   <Box>
                     <Tooltip title="chỉnh sửa" placement="top">
