@@ -37,7 +37,7 @@ function App() {
           <Route path="/log-up" element={<LogUp />} />
 
           {/* Admin */}
-          {/* <Route element={<ProtectedAmin />}> */}
+          <Route element={<ProtectedAmin />}>
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="usermanagement" element={<UserManagement />} />
               <Route
@@ -47,7 +47,7 @@ function App() {
               <Route path="booking" element={<Booking />} />
               <Route path="listroom-Admin" element={<ListRoomAdmin />} />
             </Route>
-          {/* </Route> */}
+          </Route>
           <Route path="access" element={<Access />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

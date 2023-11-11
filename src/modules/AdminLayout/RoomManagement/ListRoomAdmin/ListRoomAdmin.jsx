@@ -238,7 +238,7 @@ export default function ListRoomsManagement() {
           <TableHead>
             <StyledTableRow>
               <StyledTableCell component="th" scope="row">
-                Mã vị trí
+                STT
               </StyledTableCell>
               <StyledTableCell component="th" scope="row">
                 Tên

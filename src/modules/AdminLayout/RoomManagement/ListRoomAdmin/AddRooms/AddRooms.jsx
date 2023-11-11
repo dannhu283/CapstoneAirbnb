@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import dayjs from "dayjs";
-import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useForm, Controller } from "react-hook-form";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
-// import { addMovie } from "../../../../APIs/movieAPI";
 import {
   Box,
   Container,
@@ -12,15 +11,19 @@ import {
   TextField,
   Typography,
   FormControlLabel,
-  Rating,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import Switch from "@mui/material/Switch";
 import { ButtonMain } from "../../../../../Components/Button";
 import { useNavigate } from "react-router-dom";
 import { object, string } from "yup";
 import { addRoom } from "../../../../../APIs/roomApi";
+import { getLocation } from "../../../../../APIs/locationApi";
 import { ModalContent, ModalSuccess } from "../../../../../Components/Modal";
-// import { ModalSuccess, ModalContent } from "../../../../Components/Modal";
+import Loading from "../../../../../Components/Loading";
 
 //MUI switch
 const IOSSwitch = styled((props) => (
@@ -75,9 +78,8 @@ const IOSSwitch = styled((props) => (
 }));
 
 export default function AddRooms({ onClose }) {
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-
   const navigate = useNavigate();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [mayGiat, setmayGiat] = useState(false);
   const [banLa, setbanLa] = useState(false);
   const [tivi, settivi] = useState(false);
@@ -87,12 +89,14 @@ export default function AddRooms({ onClose }) {
   const [doXe, setdoXe] = useState(false);
   const [hoBoi, sethoBoi] = useState(false);
   const [banUi, setbanUi] = useState(false);
+  const [selectedViTri, setSelectedViTri] = useState("");
 
   const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
     watch,
+    control,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -145,6 +149,17 @@ export default function AddRooms({ onClose }) {
       setShowSuccessModal(true);
     },
   });
+
+  const { data: location = [], isLoading } = useQuery({
+    queryKey: ["location"],
+    queryFn: getLocation,
+  });
+
+  const handleChangeViTri = (evt) => {
+    setSelectedViTri(evt.target.value);
+  };
+
+  if (isLoading) return <Loading />;
 
   return (
     <Container>
@@ -241,18 +256,37 @@ export default function AddRooms({ onClose }) {
               helperText={errors.giaTien && errors.giaTien.message}
             />
           </Grid>
+
           <Grid item xs={12} sm={4}>
-            <TextField
-              fullWidth
-              type="number"
-              label="maViTri"
-              color="success"
-              variant="outlined"
-              // InputLabelProps={{ shrink: true }}
-              {...register("maViTri")}
-              error={!!errors.maViTri}
-              helperText={errors.maViTri && errors.maViTri.message}
-            />
+            <FormControl sx={{ m: 1, minWidth: "80%" }} color="success">
+              <InputLabel>Chọn Vị Trí</InputLabel>
+              <Controller
+                control={control}
+                defaultValue=""
+                name="maViTri"
+                render={({ field }) => (
+                  <Select
+                    value={selectedViTri}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleChangeViTri(e);
+                    }}
+                    autoWidth
+                    label="Chọn Vị Trí"
+                    {...field}
+                  >
+                    <MenuItem value=" ">
+                      <em>------</em>
+                    </MenuItem>
+                    {location.map((loca) => (
+                      <MenuItem key={loca.id} value={loca.id}>
+                        {loca.tenViTri}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+            </FormControl>
           </Grid>
           {/* mota */}
           <Grid item xs={6}>
