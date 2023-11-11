@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  TextField,
+  Typography,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Modal,
+} from "@mui/material";
 import { ButtonCustom, ButtonMain } from "../../../../Components/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { object, string } from "yup";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getInfor, updateUser } from "../../../../APIs/userApi";
@@ -18,10 +28,12 @@ const updateShema = object({
   phone: string().required("Vui lòng nhập số điện thoại"),
   birthday: string().required("Ngày sinh không được để trống"),
   id: string(),
+  role: string().required("Vui lòng loại người dùng"),
 });
 
 export default function UpdateUser({ userId, onClose }) {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [openErro, setOpenErro] = useState(false);
   const queryClient = useQueryClient();
 
   const { data: user = [], isLoading } = useQuery({
@@ -33,6 +45,7 @@ export default function UpdateUser({ userId, onClose }) {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
     setValue,
   } = useForm({
@@ -53,6 +66,9 @@ export default function UpdateUser({ userId, onClose }) {
     onSuccess: () => {
       queryClient.invalidateQueries(["user", userId]);
       setShowSuccessModal(true);
+    },
+    onError: (err) => {
+      setOpenErro(true);
     },
   });
 
@@ -161,6 +177,28 @@ export default function UpdateUser({ userId, onClose }) {
               helperText={errors.birthday && errors.birthday.message}
             />
           </Grid>
+
+          <Grid item xs={6}>
+            <FormControl fullWidth error={!!errors.role}>
+              <InputLabel id="role">Mã người dùng</InputLabel>
+              <Controller
+                name="role"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    labelId="role"
+                    id="role"
+                    label="Loại người dùng"
+                    {...field}
+                  >
+                    <MenuItem value={""}>Chọn loại người dùng</MenuItem>
+                    <MenuItem value={"USER"}>Khách hàng</MenuItem>
+                    <MenuItem value={"ADMIN"}>Quản trị viên</MenuItem>
+                  </Select>
+                )}
+              />
+            </FormControl>
+          </Grid>
           {error && (
             <Typography
               sx={{ textAlign: "center", width: "100%", marginTop: "10px" }}
@@ -206,6 +244,51 @@ export default function UpdateUser({ userId, onClose }) {
           </ModalContent>
         </ModalSuccess>
       )}
+      {/* Modal báo lỗi */}
+
+      <Modal
+        open={openErro}
+        onClose={() => {
+          setOpenErro(false);
+        }}
+        sx={{
+          position: "fixed",
+          top: "0",
+          left: "0",
+          width: "100%",
+          height: "100%",
+          backgroundColor: " rgba(0, 0, 0, 0.6)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          opacity: 1000000,
+        }}
+      >
+        <ModalContent>
+          <img
+            style={{ width: "120px", marginTop: "10px" }}
+            src="/img/animation_error_small.gif"
+            alt="errro"
+          />
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: "bold",
+              marginBottom: "20px",
+              color: "#f43f5e",
+            }}
+          >
+            Không sửa được giá trị mặc định
+          </Typography>
+          <ButtonCustom
+            onClick={() => {
+              setOpenErro(false);
+            }}
+          >
+            Đóng
+          </ButtonCustom>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }

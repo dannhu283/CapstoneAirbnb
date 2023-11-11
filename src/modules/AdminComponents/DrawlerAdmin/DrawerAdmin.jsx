@@ -18,7 +18,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
-import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import BedroomChildIcon from "@mui/icons-material/BedroomChild";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Collapse from "@mui/material/Collapse";
 import { Link, useNavigate } from "react-router-dom";
@@ -291,7 +291,7 @@ export default function DrawerAdmin() {
                   justifyContent: "center",
                 }}
               >
-                <ReceiptLongIcon
+                <BedroomChildIcon
                   sx={{
                     fontSize: open ? "40px" : "50px",
                     marginLeft: open ? "20px" : "12px",

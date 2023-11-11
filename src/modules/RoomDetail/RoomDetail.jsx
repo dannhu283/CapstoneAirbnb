@@ -27,7 +27,7 @@ export default function RoomDetail() {
     queryFn: () => getLocationById(roomId),
     enabled: !!roomId,
   });
-  // Lấy giá tiền 
+  // Lấy giá tiền
   const price = roomDetail?.giaTien
   // Lấy số lượng feedbacks
   const handleGetFeedback = (feedbacks)=>{

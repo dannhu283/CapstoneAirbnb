@@ -17,6 +17,7 @@ import {
   Snackbar,
   Stack,
   TableHead,
+  Tooltip,
 } from "@mui/material";
 import { StyledTableCell, StyledTableRow } from "./index";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -275,26 +276,30 @@ export default function LocationManagement() {
                 <StyledTableCell>{location.tinhThanh}</StyledTableCell>
                 <StyledTableCell>
                   <Box>
-                    <IconButton
-                      aria-label="update"
-                      size="large"
-                      onClick={() => {
-                        setOpen(true);
-                        setSelectedLocation(location.id);
-                      }}
-                    >
-                      <EditIcon fontSize="inherit" color="primary" />
-                    </IconButton>
-                    <IconButton
-                      aria-label="delete"
-                      size="large"
-                      onClick={() => {
-                        setOpenDelete(true);
-                        setSelectedLocation(location.id);
-                      }}
-                    >
-                      <DeleteIcon fontSize="inherit" color="error" />
-                    </IconButton>
+                    <Tooltip title="chỉnh sửa" placement="top">
+                      <IconButton
+                        aria-label="update"
+                        size="large"
+                        onClick={() => {
+                          setOpen(true);
+                          setSelectedLocation(location.id);
+                        }}
+                      >
+                        <EditIcon fontSize="inherit" color="primary" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Xóa vị trí" placement="bottom">
+                      <IconButton
+                        aria-label="delete"
+                        size="large"
+                        onClick={() => {
+                          setOpenDelete(true);
+                          setSelectedLocation(location.id);
+                        }}
+                      >
+                        <DeleteIcon fontSize="inherit" color="error" />
+                      </IconButton>
+                    </Tooltip>
                   </Box>
                 </StyledTableCell>
               </StyledTableRow>
