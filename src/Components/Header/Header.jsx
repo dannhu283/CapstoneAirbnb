@@ -70,8 +70,6 @@ export default function Header() {
       if (window.scrollY > 3) {
         // Show BoxSearch when scrolled down 100 pixels (you can adjust this value)
         setShowBoxSearch(false);
-      } else {
-        setShowBoxSearch(true);
       }
     };
 
