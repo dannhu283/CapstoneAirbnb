@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  TextField,
+  Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import { ButtonCustom, ButtonMain } from "../../../../../Components/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { object, string } from "yup";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getBooked, updateBooking } from "../../../../../APIs/roomApi";
+import {
+  getBooked,
+  updateBooking,
+  getRooms,
+} from "../../../../../APIs/roomApi";
 import Loading from "../../../../../Components/Loading";
 import { ModalSuccess, ModalContent } from "../../../../../Components/Modal";
 import dayjs from "dayjs";
@@ -25,9 +38,18 @@ const updateBookingSchema = object({
 });
 
 export default function UpdateBooking({ userId, onClose }) {
-  console.log(userId);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [selectedRoom, setSelectedRoom] = useState("");
   const queryClient = useQueryClient();
+
+  const { data: rooms = [] } = useQuery({
+    queryKey: ["location"],
+    queryFn: getRooms,
+  });
+
+  const handleChangeRoom = (evt) => {
+    setSelectedRoom(evt.target.value);
+  };
 
   const { data: booked = [], isLoading } = useQuery({
     queryKey: ["booked", userId],
@@ -35,11 +57,10 @@ export default function UpdateBooking({ userId, onClose }) {
     enabled: !!userId,
   });
 
-  console.log(booked);
-
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
     setValue,
   } = useForm({
@@ -54,7 +75,7 @@ export default function UpdateBooking({ userId, onClose }) {
     mode: "onTouched",
   });
 
-  const { mutate: handleUpdatebooked, error } = useMutation({
+  const { mutate: handleUpdatebooked } = useMutation({
     mutationFn: (payload) => updateBooking(userId, payload),
     onSuccess: () => {
       queryClient.invalidateQueries(["booked", userId]);
@@ -103,95 +124,92 @@ export default function UpdateBooking({ userId, onClose }) {
         style={{ width: "100%", marginTop: "20px" }}
       >
         <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <TextField
-              label="ID"
-              color="success"
-              variant="outlined"
-              fullWidth
-              {...register("id")}
-              disabled
-            />
+          <Grid item xs={12}>
+            <FormControl sx={{ minWidth: "100%" }} color="success">
+              <InputLabel>Chọn Phòng</InputLabel>
+              <Controller
+                control={control}
+                defaultValue=""
+                name="maPhong"
+                render={({ field }) => (
+                  <Select
+                    value={selectedRoom}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleChangeRoom(e);
+                    }}
+                    label="Chọn Phòng"
+                    {...field}
+                  >
+                    <MenuItem value=" ">
+                      <em>------</em>
+                    </MenuItem>
+                    {rooms.map((loca) => (
+                      <MenuItem key={loca.id} value={loca.id}>
+                        {loca.tenPhong}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+            </FormControl>
           </Grid>
-
-          <Grid item xs={6}>
-            <TextField
-              label="Mã Phòng"
-              color="success"
-              variant="outlined"
-              fullWidth
-              {...register("maPhong")}
-              error={!!errors.maPhong}
-              helperText={errors.maPhong && errors.maPhong.message}
-            />
-          </Grid>
-
           <Grid item xs={6}>
             <TextField
               label="Mã Người Dùng"
-              color="success"
-              variant="outlined"
               fullWidth
-              {...register("maNguoiDung")}
               error={!!errors.maNguoiDung}
-              helperText={errors.maNguoiDung && errors.maNguoiDung.message}
+              helperText={errors.maNguoiDung?.message}
+              {...register("maNguoiDung")}
             />
           </Grid>
-
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <TextField
               label="Số Lượng Khách"
-              color="success"
-              variant="outlined"
               fullWidth
-              {...register("soLuongKhach")}
               error={!!errors.soLuongKhach}
-              helperText={errors.soLuongKhach && errors.soLuongKhach.message}
+              helperText={errors.soLuongKhach?.message}
+              {...register("soLuongKhach")}
             />
           </Grid>
-
-          <Grid item xs={4}>
-            <TextField
-              label="Ngày Đến"
-              color="success"
-              variant="outlined"
-              fullWidth
-              type="datetime-local"
-              InputLabelProps={{ shrink: true }}
-              {...register("ngayDen", {
-                setValueAs: (values) => {
-                  return dayjs(values).format("DD-MM-YYYY");
-                },
-              })}
-              error={!!errors.ngayDen}
-              helperText={errors.ngayDen && errors.ngayDen.message}
-            />
+          <Grid item xs={6} sx={{ display: "flex", alignItems: "center" }}>
+            <Typography sx={{ marginRight: "20px" }}>Ngày Đến</Typography>
+            <FormControl color="success">
+              <TextField
+                color="success"
+                type="datetime-local"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                {...register("ngayDen", {
+                  setValueAs: (values) => {
+                    return dayjs(values).format("YYYY-MM-DD");
+                  },
+                })}
+                error={!!errors.ngayDen}
+                helperText={errors.ngayDen && errors?.ngayDen.message}
+              />
+            </FormControl>
           </Grid>
-
-          <Grid item xs={4}>
-            <TextField
-              color="success"
-              variant="outlined"
-              fullWidth
-              type="datetime-local"
-              InputLabelProps={{ shrink: true }}
-              {...register("ngayDi", {
-                setValueAs: (values) => {
-                  return dayjs(values).format("DD-MM-YYYY");
-                },
-              })}
-              error={!!errors.ngayDi}
-              helperText={errors.ngayDi && errors.ngayDi.message}
-            />
+          <Grid item xs={6} sx={{ display: "flex", alignItems: "center" }}>
+            <Typography sx={{ marginRight: "20px" }}>Ngày Đi</Typography>
+            <FormControl color="success">
+              <TextField
+                color="success"
+                type="datetime-local"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                {...register("ngayDi", {
+                  setValueAs: (values) => {
+                    return dayjs(values).format("YYYY-MM-DD");
+                  },
+                })}
+                error={!!errors.ngayDi}
+                helperText={errors.ngayDi && errors?.ngayDi.message}
+              />
+            </FormControl>
           </Grid>
-          {error && (
-            <Typography
-              sx={{ textAlign: "center", width: "100%", marginTop: "10px" }}
-              color="red"
-            >
-              {error}
-            </Typography>
-          )}
         </Grid>
         <ButtonCustom
           type="submit"

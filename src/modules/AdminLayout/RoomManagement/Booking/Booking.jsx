@@ -234,7 +234,7 @@ export default function Booking() {
           <TableHead>
             <StyledTableRow>
               <StyledTableCell component="th" scope="row">
-                ID
+                STT
               </StyledTableCell>
               <StyledTableCell component="th" scope="row">
                 Mã Phòng

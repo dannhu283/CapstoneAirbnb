@@ -241,6 +241,7 @@ export default function UserManagement() {
               <StyledTableCell component="th" scope="row">
                 ID
               </StyledTableCell>
+
               <StyledTableCell component="th" scope="row">
                 Email
               </StyledTableCell>
@@ -251,7 +252,7 @@ export default function UserManagement() {
                 Ngày Sinh
               </StyledTableCell>
               <StyledTableCell component="th" scope="row">
-                Mã người dùng
+                Role
               </StyledTableCell>
               <StyledTableCell component="th" scope="row">
                 Chức năng

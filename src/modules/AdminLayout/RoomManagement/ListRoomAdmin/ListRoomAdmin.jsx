@@ -183,7 +183,7 @@ export default function ListRoomsManagement() {
 
   useEffect(() => {
     if (roomList) {
-      setFilteredRooms(roomList); // Ban đầu, filteredRooms bằng danh sách customers
+      setFilteredRooms(roomList);
     }
   }, [roomList]);
 
