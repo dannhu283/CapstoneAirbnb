@@ -36,6 +36,7 @@ import { deleteRoom, getRooms } from "../../../../APIs/roomApi";
 import { ModalContent, ModalWidth } from "../../../../Components/Modal";
 import AddRooms from "./AddRooms";
 import UpdateRoom from "./UpdateRoom";
+import ModalUpLoadImg from "./ModalUpLoadImg";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -117,7 +118,7 @@ export default function ListRoomsManagement() {
   const [filteredRooms, setFilteredRooms] = useState([]);
   const [openStack, setOpenStack] = useState(false);
   const [openErro, setOpenErro] = useState(false);
-
+  const [modalUpImg,setModalImg] = useState(false)
   const queryClient = useQueryClient();
 
   const { data: roomList = [], isLoading } = useQuery({
@@ -270,7 +271,8 @@ export default function ListRoomsManagement() {
                 <StyledTableCell>{room.id}</StyledTableCell>
                 <StyledTableCell>{room.tenPhong}</StyledTableCell>
                 <StyledTableCell>
-                  <img src={room.hinhAnh} width={50} height={50} alt="" />
+                {modalUpImg && <ModalUpLoadImg roomId={room.id} onClose={setModalImg} roomImg={room.hinhAnh}/>}
+                  < img style={{cursor:'pointer'}} onClick={()=>setModalImg(true)} src={room.hinhAnh} width={50} height={50} alt="" />
                 </StyledTableCell>
                 <StyledTableCell>{room.khach}</StyledTableCell>
                 <StyledTableCell>{room.phongNgu}</StyledTableCell>
@@ -302,6 +304,7 @@ export default function ListRoomsManagement() {
                       </IconButton>
                     </Tooltip>
                   </Box>
+                
                 </StyledTableCell>
               </StyledTableRow>
             ))}
@@ -333,7 +336,7 @@ export default function ListRoomsManagement() {
           </TableFooter>
         </Table>
       </TableContainer>
-
+      
       {/* Modal update user */}
       <Modal
         open={open}

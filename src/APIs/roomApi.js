@@ -111,3 +111,15 @@ export const addRoom = async (payload) => {
     throw error.response.data?.content;
   }
 };
+export const upLoadImgRoom = async (roomId,payload) => {
+  try {
+    const response = await fetcher.post(`/phong-thue/upload-hinh-phong`,payload,{
+      params:{
+        maPhong:roomId
+      }
+    });
+    return response.data?.content;
+  } catch (error) {
+    throw error.response.data?.content;
+  }
+};
