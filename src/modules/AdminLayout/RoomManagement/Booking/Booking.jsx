@@ -161,7 +161,7 @@ export default function Booking() {
 
   const filterUsers = () => {
     let filteredData = listBooked.filter((room) =>
-      room.maPhong.toString().includes(searchQuery.toString())
+      room.maNguoiDung.toString().includes(searchQuery.toString())
     );
 
     setFilteredUsers(filteredData);
@@ -201,7 +201,7 @@ export default function Booking() {
         >
           <TextField
             fullWidth
-            label="Tìm kiếm tài khoản theo mã phòng"
+            label="Tìm kiếm booking theo mã người dùng"
             id="fullWidth"
             color="secondary"
             value={searchQuery}
