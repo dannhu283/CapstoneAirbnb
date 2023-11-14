@@ -1,5 +1,5 @@
 import React from "react";
-import { Desc, TenPhong } from "../../../ListRoom/RoomItem";
+import { TenPhong } from "../../../ListRoom/RoomItem";
 
 import LocalLaundryServiceIcon from "@mui/icons-material/LocalLaundryService";
 import IronIcon from "@mui/icons-material/Iron";
@@ -13,28 +13,29 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
+  Divider,
   Grid,
   IconButton,
   Tooltip,
+  CardMedia,
   Typography,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { getRoomDetail } from "../../../../APIs/roomApi";
 import dayjs from "dayjs";
-export default function History({ roomId,startDay,endDay }) {
+export default function History({ roomId, startDay, endDay }) {
   const { data: room = {} } = useQuery({
     queryKey: ["room", roomId],
     queryFn: () => getRoomDetail(roomId),
   });
-  const  startDate = dayjs(startDay).format('DD/MM/YYYY')
-  const  endDate = dayjs(endDay).format('DD/MM/YYYY')
+
+  const startDate = dayjs(startDay).format("DD/MM/YYYY");
+  const endDate = dayjs(endDay).format("DD/MM/YYYY");
   return (
     <div>
       <Grid item xs={12} key={room.id}>
         <Card>
           <CardMedia component="img" height="140" image={room.hinhAnh} />
-
           <CardContent>
             <TenPhong>{room.tenPhong}</TenPhong>
             <Typography sx={{ fontSize: "14px", marginTop: "10px" }}>
@@ -118,16 +119,24 @@ export default function History({ roomId,startDay,endDay }) {
               )}
             </CardActions>
 
-            <Desc>{room.moTa}</Desc>
             <Box
-              sx={{padding:'20px 0',display:'flex',justifyContent:'space-between'}}
+              sx={{
+                padding: "20px 0",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
             >
               <Typography fontWeight="bold">${room.giaTien}/ đêm</Typography>
-              <Typography  fontWeight="bold">Ngày Đến: <i>{startDate}</i> - Ngày đi: <i>{endDate}</i> </Typography>
+              <Typography fontWeight="bold">
+                Ngày Đến: <i>{startDate}</i> - Ngày đi: <i>{endDate}</i>{" "}
+              </Typography>
             </Box>
           </CardContent>
         </Card>
       </Grid>
+      <Divider
+        sx={{ margin: "10px 0", backgroundColor: "#f43f5e", height: "2px" }}
+      />
     </div>
   );
 }

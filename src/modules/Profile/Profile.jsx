@@ -16,6 +16,7 @@ export default function Profile() {
   const [isOpenFormUser, setIsOpenFormUser] = useState(false);
   const { currentUser } = useUserContext();
   const { userId } = useParams();
+
   const { data: listRooms = [] } = useQuery({
     queryKey: ["historyBooking"],
     queryFn: () => getHistoryRoom(userId),
