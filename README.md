@@ -15,4 +15,10 @@ Nhóm 11 :
             +Quản lí vị trí/admin
             +Danh Sách Phòng/admin
 
+    -Tài khoản Admin
+        adminlatao@gmail.com
+        Nhu@1234
+                
+
+
 
