@@ -38,7 +38,7 @@ export default function Profile() {
         user: { ...user },
       })
     );
-  }, [user]);
+  }, [isOpen, currentUser, user]);
   return (
     <div className={styled.profile}>
       <Container

@@ -1,0 +1,22 @@
+.roomUtilities .heading {
+  box-shadow: rgba(0, 0, 0, 0.08) 0 1px 0;
+  padding-bottom: 20px;
+}
+.roomUtilities .title {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-size: 25px;
+}
+.roomUtilities .detailDesc {
+  padding-bottom: 20px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0 1px 0;
+}
+.roomUtilities .detailDesc .descItem {
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+}
+.roomUtilities .utilities {
+  padding-bottom: 50px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0 1px 0;
+}/*# sourceMappingURL=RoomUtilities.module.css.map */

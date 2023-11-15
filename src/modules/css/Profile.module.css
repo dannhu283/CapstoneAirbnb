@@ -1,0 +1,22 @@
+.profile {
+  padding-top: 240px;
+}
+.profile .profileAvatar {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.profile .profileAvatar img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+}
+.profile .historyBooking {
+  padding: 30px 0;
+}
+.profile .historyBooking .listRoom {
+  position: relative;
+  margin-top: 28px;
+  overflow: auto;
+  height: 700px;
+}/*# sourceMappingURL=Profile.module.css.map */

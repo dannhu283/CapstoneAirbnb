@@ -1,0 +1,24 @@
+@media (max-width: 1199.98px) {
+  .bannerItem {
+    padding-top: 64px;
+  }
+}
+@media (max-width: 600px) {
+  .bannerItem {
+    padding-top: 51px;
+  }
+}
+.bannerItem .bannerImg {
+  width: 100%;
+  height: 80%;
+  display: block;
+  -o-object-fit: cover;
+     object-fit: cover;
+  position: relative;
+}
+
+@media (max-width: 450px) {
+  .arrowItem {
+    top: 56% !important;
+  }
+}/*# sourceMappingURL=Banner.module.css.map */

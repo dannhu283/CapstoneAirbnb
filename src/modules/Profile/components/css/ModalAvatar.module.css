@@ -1,0 +1,16 @@
+.avaImg {
+  width: 180px !important;
+  height: 180px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-bottom: 30px;
+}
+
+.btnAva {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
+  padding-top: 20px;
+  position: relative;
+  border-top: 1px solid #CED0D4;
+}/*# sourceMappingURL=ModalAvatar.module.css.map */

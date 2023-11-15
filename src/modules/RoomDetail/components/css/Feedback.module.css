@@ -1,0 +1,15 @@
+.feedback {
+  padding: 30px 0;
+}
+.feedback .feedbackItem {
+  display: flex;
+}
+.feedback .feedbackItem .feedbackDetail {
+  margin-left: 15px;
+}
+.feedback .addComment {
+  display: flex;
+}
+.feedback .btnAddComment {
+  padding-left: 53px;
+}/*# sourceMappingURL=Feedback.module.css.map */
