@@ -1,0 +1,93 @@
+.bookingRoom {
+  margin-top: 15px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 10px;
+  position: sticky;
+  top: 120px;
+  z-index: 999;
+}
+.bookingRoom .bookingContent {
+  padding: 20px;
+}
+.bookingRoom .bookingContent .bookingTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.bookingRoom .bookingContent .bookingTitle .priceOfNight {
+  font-size: 17px;
+}
+.bookingRoom .bookingContent .bookingTitle .averageRating {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 15px;
+}
+.bookingRoom .bookingContent .bookingTitle .averageRating .totalFeedback {
+  font-size: 15px;
+  text-decoration: underline;
+  padding-left: 5px;
+  color: rgb(113, 113, 113);
+}
+.bookingRoom .bookingContent .bookingDetail .wrapCalendar {
+  position: absolute;
+  right: 0;
+}
+.bookingRoom .bookingContent .bookingDetail .dateRight {
+  width: 50%;
+  border-right: 1px solid #b0b0b0;
+  padding-left: 10px;
+}
+.bookingRoom .bookingContent .bookingDetail .dateLeft {
+  width: 50%;
+  padding-left: 15px;
+}
+.bookingRoom .bookingContent .bookingDetail .customerItem {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #b0b0b0;
+  padding: 5px 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top-color: transparent;
+}
+.bookingRoom .bookingContent .bookingDetail .customerItem .customerRight {
+  padding-left: 5px;
+}
+.bookingRoom .bookingContent .bookingDetail .customerItem .customerLeft {
+  width: 30%;
+  padding-left: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.bookingRoom .bookingContent .bookingDetail .btnBookingItem {
+  margin-top: 20px;
+}
+.bookingRoom .bookingContent .bookingDetail .btnBookingItem .btnBooking {
+  width: 100%;
+  height: 50px;
+  background-color: #e51d52;
+  color: white;
+  font-size: 19px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+.bookingRoom .bookingContent .bookingDetail .btnBookingItem .btnBooking:hover {
+  opacity: 0.8;
+}
+.bookingRoom .bookingContent .bookingDetail .priceBeforeBooking {
+  padding-top: 25px;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: rgba(0, 0, 0, 0.08) 0 1px 0;
+}
+.bookingRoom .bookingContent .bookingDetail .totalPrice {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}/*# sourceMappingURL=BookingRoom.module.css.map */

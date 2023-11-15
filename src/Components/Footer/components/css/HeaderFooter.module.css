@@ -1,0 +1,15 @@
+.headerFooter {
+  padding: 60px 0;
+  box-shadow: rgba(0, 0, 0, 0.08) 0 1px 0;
+}
+.headerFooter .headerFooterItem .imgFooter {
+  width: 100%;
+  border-radius: 10px;
+  min-height: 200px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.headerFooter .headerFooterItem .title {
+  font-weight: 500;
+  margin-top: 10px;
+}/*# sourceMappingURL=HeaderFooter.module.css.map */

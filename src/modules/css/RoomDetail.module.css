@@ -1,0 +1,40 @@
+.roomDetail {
+  padding-top: 250px;
+}
+.roomDetail .roomItem .roomHeading .roomName {
+  margin-bottom: 10px;
+  font-size: 30px;
+  font-weight: 500;
+}
+.roomDetail .roomItem .roomHeading .locationDetail {
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+}
+.roomDetail .roomItem .roomHeading .locationDetail .locationFlex {
+  align-items: center;
+  display: flex;
+  font-size: 15px;
+}
+.roomDetail .roomItem .roomHeading .locationDetail .rateItem {
+  font-weight: 500;
+}
+.roomDetail .roomItem .roomHeading .locationDetail .rateItem span {
+  text-decoration: underline;
+  padding-left: 5px;
+}
+.roomDetail .roomItem .roomHeading .locationDetail .locationIcon {
+  margin-left: 10px;
+  margin-right: 10px;
+  font-weight: 400;
+}
+.roomDetail .roomItem .roomHeading .locationDetail .locationName span {
+  margin-left: 10px;
+  text-decoration: underline;
+  font-weight: 500;
+  font-size: 15px;
+}
+.roomDetail .roomItem img {
+  width: 100%;
+  border-radius: 15px;
+}/*# sourceMappingURL=RoomDetail.module.css.map */
