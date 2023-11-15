@@ -3,10 +3,10 @@ Nhóm 11 :
     -Trần Thị Đan Như 
             + Header,Footer
             +Log in,LogUp
+            +Carousel
             +ListRoom
             +User/admin
             +Booking/admin
-            
     -Nguyễn Văn Nam
             +Location
             +RoomDetail

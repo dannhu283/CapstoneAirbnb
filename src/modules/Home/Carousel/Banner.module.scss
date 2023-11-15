@@ -1,0 +1,21 @@
+.bannerItem {
+  @media (max-width:1199.98px) {
+    padding-top: 64px;
+  }
+  @media (max-width:600px) {
+    padding-top: 51px;
+  }
+  .bannerImg {
+    width: 100%;
+    height: 80%;
+    display: block;
+    object-fit: cover;
+    position: relative;
+  }
+}
+
+.arrowItem {
+  @media (max-width:450px) {
+    top: 56% !important;
+  }
+}

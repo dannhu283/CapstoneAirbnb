@@ -57,7 +57,6 @@ export default function Locations() {
   };
   return (
     <CarouselContainer>
-      <Box height={50} />
       <div className={locationStyle("location")}>
         <Container>
           <Typography
