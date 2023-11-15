@@ -166,7 +166,7 @@ export default function ListRoomsManagement() {
   // Function to filter users based on search query
   const filterLocations = () => {
     const filteredData = roomList.filter((room) =>
-      room.tenViTri?.toLowerCase().includes(searchQuery.toLowerCase())
+      room.tenPhong?.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredRooms(filteredData);
   };
@@ -242,7 +242,7 @@ export default function ListRoomsManagement() {
                 STT
               </StyledTableCell>
               <StyledTableCell component="th" scope="row">
-                Tên
+                Tên Phòng
               </StyledTableCell>
               <StyledTableCell component="th" scope="row">
                 Đổi Hình Ảnh
