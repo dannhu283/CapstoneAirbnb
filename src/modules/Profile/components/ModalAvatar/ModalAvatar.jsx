@@ -40,7 +40,6 @@ export default function ModalAvatar({ onClose, user }) {
       onClose(false);
     },
   });
-  
 
   const hinhAnh = fileInputRef.current;
   useEffect(() => {
@@ -66,7 +65,11 @@ export default function ModalAvatar({ onClose, user }) {
             alignItems: "center",
           }}
         >
-          <img className={ModalAvatarStyled.avaImg} src={imgPreview || "/img/avatar.jpeg"} alt="" />
+          <img
+            className={ModalAvatarStyled.avaImg}
+            src={imgPreview || "/img/avatar.jpeg"}
+            alt=""
+          />
           <Button
             component="label"
             variant="contained"

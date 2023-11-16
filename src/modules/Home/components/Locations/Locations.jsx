@@ -7,12 +7,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "./Location.module.scss";
 import cn from "classnames/bind";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CarouselContainer } from "./index";
 
 const locationStyle = cn.bind(styled);
 
 export default function Locations() {
+  const navigate = useNavigate();
   const { data: locations = [] } = useQuery({
     queryKey: ["locations"],
     queryFn: getLocation,
@@ -46,6 +47,7 @@ export default function Locations() {
       },
     ],
   };
+
   return (
     <CarouselContainer>
       <div className={locationStyle("location")}>
@@ -59,9 +61,15 @@ export default function Locations() {
           <Slider {...settings}>
             {locations.map((location) => (
               <div className={locationStyle("locationItem")} key={location.id}>
-                <Link to={`/list-room/${location.id}`}>
-                  <img src={location.hinhAnh} alt="" />
-                </Link>
+                <img
+                  src={location.hinhAnh}
+                  alt="#"
+                  onClick={() => {
+                    navigate(`/list-room/${location.id}`);
+                    window.scrollTo(0, 0);
+                  }}
+                />
+
                 <div className={locationStyle("locationDetail")}>
                   <Typography sx={{ fontWeight: "600", fontSize: "13px" }}>
                     {location.tinhThanh}
