@@ -97,8 +97,10 @@ export default function Header() {
     setAnchorElUser(null);
     if (setting === "Đăng nhập") {
       navigate("/log-in");
+      window.scrollTo(0, 0);
     } else if (setting === "Đăng kí") {
       navigate("/log-up");
+      window.scrollTo(0, 0);
     } else if (setting === "Đăng xuất") {
       handleConfirmLogout();
     }
@@ -146,6 +148,7 @@ export default function Header() {
   const handleClickInfor = () => {
     setAnchorElUser(null);
     navigate(`/profile/${currentUser.user.id}`);
+    window.scrollTo(0, 0);
   };
 
   if (isLoading) return <Loading />;
@@ -168,7 +171,10 @@ export default function Header() {
                   justifyContent: "center",
                   cursor: "pointer",
                 }}
-                onClick={() => navigate("/")}
+                onClick={() => {
+                  navigate("/");
+                  window.scrollTo(0, 0);
+                }}
               >
                 <img
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6JQvbL_1Ti02W0tHPWhhiFWtDM7RoUaE5nA&usqp=CAU"

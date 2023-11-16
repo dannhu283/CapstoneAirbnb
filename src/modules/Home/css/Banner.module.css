@@ -1,3 +1,6 @@
+.bannerItem {
+  position: relative;
+}
 @media (max-width: 1199.98px) {
   .bannerItem {
     padding-top: 64px;

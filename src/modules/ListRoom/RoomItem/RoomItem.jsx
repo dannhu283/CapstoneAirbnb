@@ -209,7 +209,10 @@ export default function RoomItem({ listRoom }) {
           listSortRooms().map((room) => (
             <Grid item xs={12} key={room.id}>
               <Card
-                onClick={() => navigate(`/roomDetail/${room.id}`)}
+                onClick={() => {
+                  navigate(`/roomDetail/${room.id}`);
+                  window.scrollTo(0, 0);
+                }}
                 sx={{
                   cursor: "pointer",
                   "&:hover": {

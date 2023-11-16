@@ -7,9 +7,9 @@
   border-radius: 10px;
   min-height: 200px;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .headerFooter .headerFooterItem .title {
   font-weight: 500;
   margin-top: 10px;
-}/*# sourceMappingURL=HeaderFooter.module.css.map */
+}
