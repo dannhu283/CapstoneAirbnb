@@ -21,12 +21,7 @@ export default function Feedback({ roomId, onGetFeedbacks }) {
   // Ngày comment
   const dayComment = dayjs().format("ddd, DD MMM YYYY HH:mm:ss [GMT]");
   // input form
-  const {
-    handleSubmit,
-    register,
-    control,
-    formState: setValue,
-  } = useForm({
+  const { handleSubmit, register, control, setValue } = useForm({
     defaultValues: {
       noiDung: "",
       saoBinhLuan: 0,
