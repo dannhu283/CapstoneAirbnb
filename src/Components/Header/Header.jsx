@@ -230,7 +230,10 @@ export default function Header() {
                       "&:hover": { color: "#f43f5e" },
                     }}
                     onClick={() => {
-                      if (!currentUser) navigate("/host");
+                      if (!currentUser) {
+                        window.scrollTo(0, 0);
+                        navigate("/host");
+                      }
                     }}
                   >
                     {currentUser
