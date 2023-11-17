@@ -17,6 +17,7 @@ import Booking from "./modules/AdminLayout/RoomManagement/Booking/Booking";
 import ListRoomAdmin from "./modules/AdminLayout/RoomManagement/ListRoomAdmin";
 import ProtectedAmin from "./routers/ProtectedAmin";
 import Access from "./Components/Access";
+import Host from "./modules/Host/Host";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="list-room/:placeId" element={<ListRoom />} />
+            <Route path="host" element={<Host />} />
 
             <Route element={<ProtectedRoute />}>
               <Route path="profile/:userId" element={<Profile />} />

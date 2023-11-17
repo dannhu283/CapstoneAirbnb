@@ -229,10 +229,13 @@ export default function Header() {
                       alignSelf: "center",
                       "&:hover": { color: "#f43f5e" },
                     }}
+                    onClick={() => {
+                      if (!currentUser) navigate("/host");
+                    }}
                   >
                     {currentUser
                       ? `Xin chào, ${currentUser?.user?.name}`
-                      : "Đón tiếp khách"}
+                      : "Cho Thuê Chỗ Ở"}
                   </Typography>
                   <IconButton>
                     <LanguageIcon
@@ -279,9 +282,6 @@ export default function Header() {
                     <Box>
                       <MenuItem onClick={handleClickInfor}>
                         <Typography fontWeight="bold">Trang cá nhân</Typography>
-                      </MenuItem>
-                      <MenuItem>
-                        <Typography fontWeight="bold">Chuyến đi</Typography>
                       </MenuItem>
 
                       <Divider />

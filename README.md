@@ -7,6 +7,7 @@ Nhóm 11 :
             +ListRoom
             +User/admin
             +Booking/admin
+            +host
     -Nguyễn Văn Nam
             +Location
             +RoomDetail
