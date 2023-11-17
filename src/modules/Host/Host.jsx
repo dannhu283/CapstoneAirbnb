@@ -53,7 +53,7 @@ export default function Host() {
         <img
           src="/img/6cb045db8d1529954753a067c4232450867b48e3-1364x770.webp"
           alt="host"
-          style={{ width: "300px", marginLeft: "35%" }}
+          style={{ width: "200px", marginLeft: "38%" }}
         />
         <HostTitle>
           Cho thuê nhà trên Airbnb với chương trình bảo vệ toàn diện
